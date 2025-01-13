@@ -19,7 +19,7 @@ function init() {
     <BrowserRouter>
       <div>
         <MainNav />
-        <div className="mt-16">
+        <div className="">
           {' '}
           {/* 내비게이션과 콘텐츠 간의 간격 조정 */}
           <NewTab />
