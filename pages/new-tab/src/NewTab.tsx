@@ -18,7 +18,7 @@ const NewTab = () => {
         />
       </div>
       <div>
-        <h1>앙기모Wl</h1>
+        <h1>앙기모ds</h1>
       </div>
     </div>
   );
