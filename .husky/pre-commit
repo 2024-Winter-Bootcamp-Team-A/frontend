@@ -1,1 +1,1 @@
-/Users/songjiwoo/.npm-global/bin/pnpm dlx lint-staged --allow-empty
+/opt/homebrew/bin/pnpm dlx lint-staged --allow-empty

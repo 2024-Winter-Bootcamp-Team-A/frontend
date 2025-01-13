@@ -4,6 +4,8 @@ import { useStorage, withErrorBoundary, withSuspense } from '@extension/shared';
 import { exampleThemeStorage } from '@extension/storage';
 import { Button } from '@extension/ui';
 import { t } from '@extension/i18n';
+import React, { useState } from 'react'; // React import
+import FAQModal from '@src/FAQModal'; // FAQModal import
 
 const NewTab = () => {
   const theme = useStorage(exampleThemeStorage);
@@ -12,7 +14,10 @@ const NewTab = () => {
   const goGithubSite = () =>
     chrome.tabs.create({ url: 'https://github.com/Jonghakseo/chrome-extension-boilerplate-react-vite' });
 
+  const [isModalOpen, setIsModalOpen] = useState(false); // 모달 상태 추가
+
   console.log(t('hello', 'World'));
+
   return (
     <div className={`App ${isLight ? 'bg-slate-50' : 'bg-gray-800'}`}>
       <header className={`App-header ${isLight ? 'text-gray-900' : 'text-gray-100'}`}>
@@ -26,6 +31,16 @@ const NewTab = () => {
         <Button className="mt-4" onClick={exampleThemeStorage.toggle} theme={theme}>
           {t('toggleTheme')}
         </Button>
+
+        {/* FAQ 버튼 추가 */}
+        <button
+          className="fixed right-4 bottom-32 text-[#FF6347] text-lg font-semibold cursor-pointer"
+          onClick={() => setIsModalOpen(true)}>
+          FAQ
+        </button>
+
+        {/* FAQ 모달창 */}
+        {isModalOpen && <FAQModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />}
       </header>
     </div>
   );
