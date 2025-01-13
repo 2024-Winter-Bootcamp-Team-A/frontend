@@ -8,7 +8,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        'dm-serif': ['DM Serif Text"', 'serif'],
+        'dm-serif': ['"DM Serif Text"'],
         lobster: ['Lobster', 'cursive'],
       },
       height: {
@@ -21,7 +21,14 @@ export default {
         '864px': '864px',
       },
       width: {
-        '552px': '800px',
+        '800px': '800px',
+        '240px': '240px',
+      },
+      margin: {
+        '60px': '60px',
+      },
+      opacity: {
+        '24': '0.24',
       },
       borderRadius: {
         lg: 'var(--radius)',
