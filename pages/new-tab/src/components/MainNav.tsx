@@ -11,10 +11,10 @@ const MainNav = () => {
       <div className="text-5xl font-dm-serif text-[#ff5213] pl-16">Liver</div>
       <div className="flex items-center space-x-24">
         <Link to="/shorts" className="text-xl font-dm-serif text-[#ff5213]">
-          TODAY's SHORTS
+          TODAY's SHORTSS
         </Link>
         <Link to="/stats" className="text-xl font-dm-serif text-[#ff5213]">
-          STATS
+          STATSss
         </Link>
         <Link to="/mypage" className="text-xl font-dm-serif text-[#ff5213]">
           MY PAGE

@@ -1,5 +1,6 @@
 import { useStorage, withErrorBoundary, withSuspense } from '@extension/shared';
 import { t } from '@extension/i18n';
+import MainBookcase from './components/MainBookcase';
 
 const NewTab = () => {
   // 이미지 경로를 chrome.runtime.getURL로 생성
@@ -18,8 +19,9 @@ const NewTab = () => {
         />
       </div>
       <div>
-        <h1>앙기모Wl</h1>
+        <MainBookcase />
       </div>
+      <h1>아니 왜 적용이 안되지?</h1>
     </div>
   );
 };

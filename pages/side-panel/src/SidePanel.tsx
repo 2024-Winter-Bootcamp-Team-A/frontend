@@ -17,7 +17,7 @@ const SidePanel = () => {
           <img src={chrome.runtime.getURL(logo)} className="App-logo" alt="logo" />
         </button>
         <p>
-          Edit <code>pages/side-panel/src/SidePanel.tsx</code>
+          Editaa <code>pages/side-panel/src/SidePanel.tsx</code>
         </p>
         <ToggleButton>Toggle theme</ToggleButton>
       </header>
