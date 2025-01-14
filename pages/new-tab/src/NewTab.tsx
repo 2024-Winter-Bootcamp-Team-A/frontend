@@ -1,49 +1,36 @@
-import '@src/NewTab.css';
-import '@src/NewTab.scss';
 import { useStorage, withErrorBoundary, withSuspense } from '@extension/shared';
-import { exampleThemeStorage } from '@extension/storage';
-import { Button } from '@extension/ui';
 import { t } from '@extension/i18n';
-import React, { useState } from 'react'; // React import
-import FAQModal from '@src/FAQModal'; // FAQModal import
+
+import MainBookcase from './components/MainBookcase';
+import MainFooter from './components/MainFooter';
 
 const NewTab = () => {
-  const theme = useStorage(exampleThemeStorage);
-  const isLight = theme === 'light';
-  const logo = isLight ? 'new-tab/logo_horizontal.svg' : 'new-tab/logo_horizontal_dark.svg';
-  const goGithubSite = () =>
-    chrome.tabs.create({ url: 'https://github.com/Jonghakseo/chrome-extension-boilerplate-react-vite' });
-
-  const [isModalOpen, setIsModalOpen] = useState(false); // 모달 상태 추가
-
-  console.log(t('hello', 'World'));
-
+  // 이미지 경로를 chrome.runtime.getURL로 생성
   return (
-    <div className={`App ${isLight ? 'bg-slate-50' : 'bg-gray-800'}`}>
-      <header className={`App-header ${isLight ? 'text-gray-900' : 'text-gray-100'}`}>
-        <button onClick={goGithubSite}>
-          <img src={chrome.runtime.getURL(logo)} className="App-logo" alt="logo" />
-        </button>
-        <p>
-          Edit <code>pages/new-tab/src/NewTab.tsx</code>
-        </p>
-        <h6>The color of this paragraph is defined using SASS.</h6>
-        <Button className="mt-4" onClick={exampleThemeStorage.toggle} theme={theme}>
-          {t('toggleTheme')}
-        </Button>
+    <div>
+      <div className="pt-40 bg-black h-1124px">
+        {/* 경로를 동적으로 설정 */}
+        <img src={'전광판이미지.png'} alt="전광판 이미지" className="w-screen h-856px" />
+        <video
+          src={chrome.runtime.getURL('sample-video.mp4')} // 비디오 경로 설정
+          className="absolute left-52 top-[180px] inset-0 m-auto w-800px h-864px rounded-lg shadow-lg"
+          controls
+          autoPlay
+          loop
+          muted
+        />
+      </div>
+      <div>
+        <MainBookcase title="Top 10" direction="right" />
+        <MainBookcase title="Trending Now" direction="left" />
+        <MainBookcase title="Editor's Choice" direction="right" />
+      </div>
+      <footer>
+        <MainFooter />
+      </footer>
 
-        {/* FAQ 버튼 추가 */}
-        <button
-          className="fixed right-4 bottom-32 text-[#FF6347] text-lg font-semibold cursor-pointer"
-          onClick={() => setIsModalOpen(true)}>
-          FAQ
-        </button>
-
-        {/* FAQ 모달창 */}
-        {isModalOpen && <FAQModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />}
-      </header>
     </div>
   );
 };
 
-export default withErrorBoundary(withSuspense(NewTab, <div>{t('loading')}</div>), <div> Error Occur </div>);
+export default withErrorBoundary(withSuspense(NewTab, <div>{t('loading')}</div>), <div>Error Occur</div>);

@@ -52,7 +52,7 @@ const Popup = () => {
             (isLight ? 'bg-blue-200 text-black' : 'bg-gray-700 text-white')
           }
           onClick={injectContentScript}>
-          Click to inject Content Script
+          Click to inject Content Scripts
         </button>
         <ToggleButton>Toggle theme</ToggleButton>
       </header>
