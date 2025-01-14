@@ -53,7 +53,7 @@ export default function MainBookcase({ title, direction = 'right' }: { title: st
                 width: `${100 / visibleItems}%`,
               }}>
               <Card>
-                <CardContent className="flex flex-col aspect-[3/4] items-center justify-center p-4 bg-gray-100 space-y-2 shadow">
+                <CardContent className="flex flex-col aspect-[3/4] items-center justify-center p-4 bg-gray-100 space-y-2 shadow-2xl ">
                   <span className="text-3xl font-semibold">{index + 1}</span>
                 </CardContent>
               </Card>
