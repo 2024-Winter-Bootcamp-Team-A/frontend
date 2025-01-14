@@ -14,4 +14,7 @@ export default withPageConfig({
   build: {
     outDir: resolve(rootDir, '..', '..', 'dist', 'side-panel'),
   },
+  server: {
+    hmr: true,
+  },
 });

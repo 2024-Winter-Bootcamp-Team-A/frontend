@@ -1,6 +1,8 @@
 import React from 'react';
 
-const Card: React.FC = () => {
+const SidePannel_short: React.FC = () => {
+  console.log('Component is rendering!'); // 렌더링 확인을 위한 줄 추가
+
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100">
       <div className="bg-gray-900 text-white rounded-lg shadow-lg max-w-sm w-full">
@@ -16,7 +18,7 @@ const Card: React.FC = () => {
             <img src="https://via.placeholder.com/300x400" alt="placeholder" className="w-full h-full object-cover" />
           </div>
           <p className="absolute bottom-4 left-4 text-white text-sm bg-black/50 px-2 py-1 rounded">
-            오늘 밤, 세계에서 이 사람이 사라진다고 해도
+            오늘 밤, 세계에서 이 사랑이 사라진다고 해도
           </p>
         </div>
 
@@ -67,4 +69,4 @@ const Card: React.FC = () => {
   );
 };
 
-export default Card;
+export default SidePannel_short;
