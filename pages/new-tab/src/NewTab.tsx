@@ -1,5 +1,6 @@
 import { useStorage, withErrorBoundary, withSuspense } from '@extension/shared';
 import { t } from '@extension/i18n';
+
 import MainBookcase from './components/MainBookcase';
 import MainFooter from './components/MainFooter';
 
@@ -27,6 +28,7 @@ const NewTab = () => {
       <footer>
         <MainFooter />
       </footer>
+
     </div>
   );
 };
