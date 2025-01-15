@@ -25,10 +25,6 @@ const NewTab = () => {
         <MainBookcase title="Trending Now" direction="left" />
         <MainBookcase title="Editor's Choice" direction="right" />
       </div>
-      <footer>
-        <MainFooter />
-      </footer>
-
     </div>
   );
 };
