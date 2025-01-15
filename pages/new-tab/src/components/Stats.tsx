@@ -55,7 +55,7 @@ const Stats: React.FC = () => {
             const translateX = (index - activeSlide) * 350;
 
             return (
-              <div
+              <button
                 key={slide.id}
                 className={`absolute transition-transform duration-700 ease-[cubic-bezier(0.4, 0, 0.2, 1)] ${
                   isActive ? 'z-10' : 'z-0'
@@ -74,7 +74,7 @@ const Stats: React.FC = () => {
                   } bg-white border border-gray-200 shadow-lg rounded-2xl flex justify-center items-center cursor-pointer`}>
                   <p className={`${isActive ? 'text-[30px]' : 'text-[24px]'} text-gray-600`}>{slide.content}</p>
                 </div>
-              </div>
+              </button>
             );
           })}
         </div>
@@ -93,7 +93,7 @@ const Stats: React.FC = () => {
 
       {/* 모달 창 */}
       {isModalOpen && (
-        <div
+        <button
           className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50"
           onClick={handleModalClick} // 배경 클릭 시 닫기
         >
@@ -102,7 +102,7 @@ const Stats: React.FC = () => {
               ✖
             </button>
           </div>
-        </div>
+        </button>
       )}
     </div>
   );
