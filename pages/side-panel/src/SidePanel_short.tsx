@@ -1,9 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-const Card: React.FC = () => {
+const SidePannel_short: React.FC = () => {
+  const [isCommentVisible, setCommentVisible] = useState(false);
+
+  const toggleCommentVisibility = () => {
+    setCommentVisible(!isCommentVisible);
+  };
+
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100">
-      <div className="bg-gray-900 text-white rounded-lg shadow-lg max-w-sm w-full">
+    <div className="flex justify-center items-center min-h-screen bg-cover bg-center" style={{ backgroundImage: "url('https://via.placeholder.com/1200x800')" }}>
+      {/* 모달창 */}
+      <div className="bg-gray-900 text-white rounded-lg shadow-lg max-w-sm w-full relative">
         {/* 상단 텍스트 */}
         <div className="px-4 pt-6">
           <h1 className="text-orange-500 font-bold text-xl">Liverary</h1>
@@ -11,12 +18,14 @@ const Card: React.FC = () => {
 
         {/* 이미지/동영상 */}
         <div className="relative mt-4">
-          <div className="h-96 bg-black rounded-lg overflow-hidden">
-            {/* 여기에 나중에 동영상을 삽입하면 됩니다 */}
-            <img src="https://via.placeholder.com/300x400" alt="placeholder" className="w-full h-full object-cover" />
+          <div className="h-96 w-full bg-black rounded-lg overflow-hidden">
+            {/* 동영상 크기를 360x640으로 설정 */}
+            <video width="360" height="640" controls>
+              <source src="https://www.w3schools.com/html/movie.mp4" type="video/mp4" />
+            </video>
           </div>
           <p className="absolute bottom-4 left-4 text-white text-sm bg-black/50 px-2 py-1 rounded">
-            오늘 밤, 세계에서 이 사람이 사라진다고 해도
+            오늘 밤, 세계에서 이 사랑이 사라진다고 해도
           </p>
         </div>
 
@@ -55,11 +64,12 @@ const Card: React.FC = () => {
         </div>
 
         {/* 댓글 추가 */}
-        <div className="border-t border-gray-700 px-4 py-4">
+        <div className={`transition-all duration-300 transform ${isCommentVisible ? 'translate-y-0' : 'translate-y-full'} border-t border-gray-700 px-4 py-4`}>
           <input
             type="text"
             placeholder="댓글 추가"
             className="w-full bg-gray-800 text-white rounded-full px-4 py-2 focus:outline-none focus:ring focus:ring-orange-500"
+            onFocus={toggleCommentVisibility}
           />
         </div>
       </div>
@@ -67,4 +77,4 @@ const Card: React.FC = () => {
   );
 };
 
-export default Card;
+export default SidePannel_short;
