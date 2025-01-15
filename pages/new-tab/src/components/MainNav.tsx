@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const MainNav = () => {
   return (
@@ -29,9 +29,16 @@ const MainNav = () => {
 
 const MainInput = () => {
   const [inputValue, setInputValue] = useState('');
+  const navigate = useNavigate(); // 엔터 키 입력 시 페이지 이동을 위한 네비게이트 함수
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter' && inputValue.trim()) {
+      navigate(`/Search?query=${encodeURIComponent(inputValue)}`); // 엔터 입력 시 검색 페이지로 이동
+    }
   };
 
   return (
@@ -41,11 +48,13 @@ const MainInput = () => {
         className="text-black text-base font-normal font-dm-serif border rounded-3xl px-12 py-2 mt-2 bg-[#FCE8E1] w-96"
         value={inputValue}
         onChange={handleInputChange}
+        onKeyDown={handleKeyDown} // Enter 키 입력 이벤트 추가
       />
-      <FontAwesomeIcon
-        icon={faMagnifyingGlass}
-        className="absolute left-3 top-7 transform -translate-y-1/2 text-[#ff5213] text-lg"
-      />
+      <Link
+        to={`/Search?query=${encodeURIComponent(inputValue)}`}
+        className="absolute left-3 top-7 transform -translate-y-1/2 text-[#ff5213] text-lg">
+        <FontAwesomeIcon icon={faMagnifyingGlass} />
+      </Link>
     </div>
   );
 };
