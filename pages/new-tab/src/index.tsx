@@ -7,6 +7,7 @@ import NewTab from '@src/NewTab';
 import MainTodayShorts from './MainTodayShorts';
 import MainFooter from './components/MainFooter';
 import Stats from './components/Stats';
+import Search from './components/Search';
 
 function init() {
   // 앱 컨테이너 선택
@@ -29,6 +30,7 @@ function init() {
             {/* 다른 경로 추가 */}
             <Route path="/recommend" element={<MainTodayShorts />} />
             <Route path="/stats" element={<Stats />} />
+            <Route path="/Search" element={<Search />} />
           </Routes>
         </div>
         <MainFooter />

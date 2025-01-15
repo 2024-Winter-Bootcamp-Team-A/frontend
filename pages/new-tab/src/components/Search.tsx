@@ -1,13 +1,16 @@
 import React from 'react';
-import MainNav from './MainNav'; // 헤더 컴포넌트 import
+import { useLocation } from 'react-router-dom';
 
 const Search: React.FC = () => {
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const query = searchParams.get('query') || '';
+
   return (
     <div className="min-h-screen w-screen bg-white">
-      <MainNav /> {/* 헤더 추가 */}
       <div className="w-full max-w-[1280px] px-4 mx-auto mt-32">
         <h2 className="text-[24px] font-bold text-left mb-6">
-          <span className="text-[#FF6347]">"한강"</span>
+          <span className="text-[#FF6347]">"{query}"</span>
           <span className="text-black">을 검색하신 결과입니다.</span>
         </h2>
 
