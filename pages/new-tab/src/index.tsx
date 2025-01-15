@@ -6,6 +6,7 @@ import MainNav from './components/MainNav';
 import NewTab from '@src/NewTab';
 import MainTodayShorts from './MainTodayShorts';
 import MainFooter from './components/MainFooter';
+import Stats from './components/Stats';
 
 function init() {
   // 앱 컨테이너 선택
@@ -27,7 +28,7 @@ function init() {
             <Route path="/" element={<NewTab />} />
             {/* 다른 경로 추가 */}
             <Route path="/recommend" element={<MainTodayShorts />} />
-            <Route path="/contact" element={<div>Contact Page</div>} />
+            <Route path="/stats" element={<Stats />} />
           </Routes>
         </div>
         <MainFooter />

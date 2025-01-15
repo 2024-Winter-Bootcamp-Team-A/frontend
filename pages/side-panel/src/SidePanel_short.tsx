@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 
-const SidePannel_short: React.FC = () => {
+interface SidePanelShortProps {
+  onCommentOpen: () => void; // onCommentOpen 속성 정의
+}
+
+const SidePannel_short: React.FC<SidePanelShortProps> = ({ onCommentOpen }) => {
   const [isCommentVisible, setCommentVisible] = useState(false);
 
   const toggleCommentVisibility = () => {
@@ -8,25 +12,27 @@ const SidePannel_short: React.FC = () => {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-cover bg-center" style={{ backgroundImage: "url('https://via.placeholder.com/1200x800')" }}>
+    <div
+      className="flex justify-center items-center bg-cover bg-center"
+      style={{ backgroundImage: "url('https://via.placeholder.com/1200x800')" }}>
       {/* 모달창 */}
-      <div className="bg-gray-900 text-white rounded-lg shadow-lg max-w-sm w-full relative">
+      <div className="bg-gray-900 text-white rounded-lg shadow-lg max-w-sm h-full ">
         {/* 상단 텍스트 */}
         <div className="px-4 pt-6">
           <h1 className="text-orange-500 font-bold text-xl">Liverary</h1>
         </div>
 
         {/* 이미지/동영상 */}
-        <div className="relative mt-4">
-          <div className="h-96 w-full bg-black rounded-lg overflow-hidden">
+        <div className="h-[680px] relative">
+          <div className="h-full w-full bg-black rounded-lg overflow-hidden mt-10 ">
             {/* 동영상 크기를 360x640으로 설정 */}
-            <video width="360" height="640" controls>
+            <video className="w-[360px] h-full" controls>
               <source src="https://www.w3schools.com/html/movie.mp4" type="video/mp4" />
             </video>
+            <p className="absolute bottom-20 left-4 text-white text-sm bg-black/50  rounded">
+              오늘 밤, 세계에서 이 사랑이 사라진다고dd
+            </p>
           </div>
-          <p className="absolute bottom-4 left-4 text-white text-sm bg-black/50 px-2 py-1 rounded">
-            오늘 밤, 세계에서 이 사랑이 사라진다고 해도
-          </p>
         </div>
 
         {/* 하단 버튼 */}
@@ -64,7 +70,8 @@ const SidePannel_short: React.FC = () => {
         </div>
 
         {/* 댓글 추가 */}
-        <div className={`transition-all duration-300 transform ${isCommentVisible ? 'translate-y-0' : 'translate-y-full'} border-t border-gray-700 px-4 py-4`}>
+        <div
+          className={`transition-all duration-300 transform ${isCommentVisible ? 'translate-y-0' : 'translate-y-full'} border-t border-gray-700 px-4 py-4`}>
           <input
             type="text"
             placeholder="댓글 추가"
