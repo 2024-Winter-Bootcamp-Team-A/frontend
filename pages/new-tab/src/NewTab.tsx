@@ -28,7 +28,6 @@ const NewTab = () => {
       <footer>
         <MainFooter />
       </footer>
-
     </div>
   );
 };
