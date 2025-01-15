@@ -1,1 +1,3 @@
-/opt/homebrew/bin/pnpm dlx lint-staged --allow-empty
+#!/bin/sh
+
+pnpm dlx lint-staged --allow-empty

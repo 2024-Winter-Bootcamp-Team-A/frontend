@@ -1,0 +1,55 @@
+.container {
+  position: relative; /* 자식 요소의 위치 조정을 위함 */
+}
+
+.animate-card {
+  position: absolute;
+  transition: transform 0.6s ease;
+}
+
+.card {
+  position: relative;
+  width: 400px;
+  height: 540px;
+  transform-style: preserve-3d;
+  transition: transform 0.6s ease;
+}
+
+.card.flipped {
+  transform: rotateY(180deg);
+}
+
+.card-center {
+    position: absolute;
+    top: 0%; /* 수직 가운데 정렬 */
+    left: 45%; /* 수평 가운데 정렬 */
+    transform: translate(0%, 0%); /* 정확한 중심 위치 */
+    z-index: 2; /* 다른 카드보다 위에 표시되도록 */
+    transition: transform 0.6s ease, top 0.6s ease, left 0.6s ease;
+  }
+  
+
+.card-selected {
+  transform: scale(1.25);
+  z-index: 1; /* 선택된 카드가 위로 올라오게 함 */
+}
+
+.card-left {
+  left: calc(50% - 490px); /* 왼쪽 카드 위치 조정 */
+  margin-right: 20px; /* 카드 간격 추가 */
+}
+
+.card-right {
+  left: calc(50% + 300px); /* 오른쪽 카드 위치 조정 */
+  margin-left: 20px; /* 카드 간격 추가 */
+}
+
+.hidden {
+    visibility: hidden; /* 요소를 보이지 않게 */
+    opacity: 0; /* 시각적으로도 투명하게 */
+    pointer-events: none; /* 클릭 이벤트 차단 */
+    transition: opacity 0.6s ease; /* 선택 시 부드럽게 나타나도록 */
+  }
+  
+
+

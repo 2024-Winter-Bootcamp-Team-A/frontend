@@ -8,9 +8,11 @@ const MainNav = () => {
     <nav className="fixed top-0 left-0 right-0 flex items-center justify-between font-dm-serif text-[#ff5213] bg-opacity-100 mt-0 mb-2 pt-12 z-50">
       {' '}
       {/* 고정된 내비게이션 바 */}
-      <div className="text-5xl font-dm-serif text-[#ff5213] pl-16">Liver</div>
+      <Link to="/" className="text-5xl font-dm-serif text-[#ff5213] pl-16">
+        Liver
+      </Link>
       <div className="flex items-center space-x-24">
-        <Link to="/shorts" className="text-xl font-dm-serif text-[#ff5213]">
+        <Link to="/recommend" className="text-xl font-dm-serif text-[#ff5213]">
           TODAY's SHORTS
         </Link>
         <Link to="/stats" className="text-xl font-dm-serif text-[#ff5213]">

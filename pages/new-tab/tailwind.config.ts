@@ -19,6 +19,10 @@ export default {
         '1124px': '1124px',
         '856px': '856px',
         '864px': '864px',
+        '100px': '100px',
+        '200px': '200px',
+        '300px': '300px',
+        '400px': '400px',
       },
       width: {
         '800px': '800px',
@@ -29,6 +33,9 @@ export default {
       },
       opacity: {
         '24': '0.24',
+      },
+      translate: {
+        '100': '34.5rem',
       },
       borderRadius: {
         lg: 'var(--radius)',

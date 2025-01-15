@@ -1,9 +1,11 @@
 import { createRoot } from 'react-dom/client';
 import '@src/index.css';
 import '@extension/ui/lib/global.css';
-import { BrowserRouter as Router, BrowserRouter } from 'react-router-dom';
+import { HashRouter as Router, Route, Routes } from 'react-router-dom';
 import MainNav from './components/MainNav';
 import NewTab from '@src/NewTab';
+import MainTodayShorts from './MainTodayShorts';
+import MainFooter from './components/MainFooter';
 
 function init() {
   // 앱 컨테이너 선택
@@ -16,16 +18,21 @@ function init() {
   const root = createRoot(appContainer);
 
   root.render(
-    <BrowserRouter>
+    <Router>
       <div>
         <MainNav />
         <div className="">
-          {' '}
-          {/* 내비게이션과 콘텐츠 간의 간격 조정 */}
-          <NewTab />
+          <Routes>
+            {/* 기본 경로 */}
+            <Route path="/" element={<NewTab />} />
+            {/* 다른 경로 추가 */}
+            <Route path="/recommend" element={<MainTodayShorts />} />
+            <Route path="/contact" element={<div>Contact Page</div>} />
+          </Routes>
         </div>
+        <MainFooter />
       </div>
-    </BrowserRouter>,
+    </Router>,
   );
 }
 
