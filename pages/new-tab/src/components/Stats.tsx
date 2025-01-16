@@ -1,9 +1,27 @@
 import React, { useState } from 'react';
 
 const slides = [
-  { id: 0, label: 'Most wished', content: 'Book 1' },
-  { id: 1, label: 'Most Commented', content: 'Book 2' },
-  { id: 2, label: 'Most views', content: 'Book 3' },
+  {
+    id: 0,
+    label: 'Most wished',
+    content: 'Book 1',
+    img: 'images/너의이름은표지.png',
+    StatInfo: { views: 100, wished: 50, Shares: 20, BookVisit: 30 },
+  },
+  {
+    id: 1,
+    label: 'Most Commented',
+    content: 'Book 2',
+    img: 'images/소년이온다표지.png',
+    StatInfo: { views: 110, wished: 60, Shares: 30, BookVisit: 40 },
+  },
+  {
+    id: 2,
+    label: 'Most views',
+    content: 'Book 3',
+    img: 'images/채식주의자표지.png',
+    StatInfo: { views: 120, wished: 70, Shares: 40, BookVisit: 50 },
+  },
 ];
 
 const Stats: React.FC = () => {
@@ -67,6 +85,41 @@ const Stats: React.FC = () => {
           <span className="text-black text-lg">{'>'}</span>
         </button>
       </div>
+
+      {/* 모달 창 */}
+      {isModalOpen && (
+        <div>
+          <button
+            className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50"
+            onClick={handleModalClick} // 배경 클릭 시 닫기
+          >
+            <section className="bg-[#FCE8E1] w-[1240px] h-[640px] rounded-4xl shadow-lg  relative flex">
+              <img src={slides[0].img} alt="StatsImg" />
+              <div className="flex flex-col justify-around w-32 h-4/5 rounded-4xl bg-white pt-">
+                <div>
+                  <h3 className="text-xl font-dm-serif">VIews</h3>
+                  <p className="text-lg text-[#FF6F3A]">{slides[0].StatInfo.views}</p>
+                </div>
+                <div>
+                  <h3 className="text-xl font-dm-serif">Wished</h3>
+                  <p className="text-lg text-[#FF6F3A]">{slides[0].StatInfo.wished}</p>
+                </div>
+                <div>
+                  <h3 className="text-xl font-dm-serif">Shared</h3>
+                  <p className="text-lg text-[#FF6F3A]">{slides[0].StatInfo.Shares}</p>
+                </div>
+                <div>
+                  <h3 className="text-xl font-dm-serif">BookVisits</h3>
+                  <p className="text-lg text-[#FF6F3A]">{slides[0].StatInfo.BookVisit}</p>
+                </div>
+              </div>
+              <button className="absolute top-4 right-4 text-black text-2xl font-bold" onClick={handleCloseModal}>
+                ✖
+              </button>
+            </section>
+          </button>
+        </div>
+      )}
     </div>
   );
 };
