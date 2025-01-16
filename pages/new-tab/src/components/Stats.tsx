@@ -95,7 +95,7 @@ const Stats: React.FC = () => {
           >
             <section className="bg-[#FCE8E1] w-[1240px] h-[640px] rounded-4xl shadow-lg  relative flex">
               <img src={slides[0].img} alt="StatsImg" />
-              <div className="flex flex-col justify-around w-32 h-4/5 rounded-4xl bg-white pt-">
+              <div className="flex flex-col justify-around w-32 h-4/5 rounded-4xl bg-white ml-2 my-3">
                 <div>
                   <h3 className="text-xl font-dm-serif">VIews</h3>
                   <p className="text-lg text-[#FF6F3A]">{slides[0].StatInfo.views}</p>
