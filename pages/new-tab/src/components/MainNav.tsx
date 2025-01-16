@@ -6,8 +6,6 @@ import { Link, useNavigate } from 'react-router-dom';
 const MainNav = () => {
   return (
     <nav className="fixed top-0 left-0 right-0 flex items-center justify-between font-dm-serif text-[#ff5213] bg-opacity-100 mt-0 mb-2 pt-12 z-50">
-      {' '}
-      {/* 고정된 내비게이션 바 */}
       <Link to="/" className="text-5xl font-dm-serif text-[#ff5213] pl-16">
         Liver
       </Link>
@@ -29,15 +27,24 @@ const MainNav = () => {
 
 const MainInput = () => {
   const [inputValue, setInputValue] = useState('');
-  const navigate = useNavigate(); // 엔터 키 입력 시 페이지 이동을 위한 네비게이트 함수
+  const navigate = useNavigate(); // 페이지 이동을 위한 useNavigate 훅
 
+  // 입력 값 변경 시 상태 업데이트
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
   };
 
+  // 검색 동작을 하나의 함수로 통합
+  const handleSearch = () => {
+    if (inputValue.trim()) {
+      navigate(`/Search?query=${encodeURIComponent(inputValue)}`); // URL에 쿼리스트링 추가 후 이동
+    }
+  };
+
+  // Enter 키 입력 시 검색 동작 수행
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter' && inputValue.trim()) {
-      navigate(`/Search?query=${encodeURIComponent(inputValue)}`); // 엔터 입력 시 검색 페이지로 이동
+    if (e.key === 'Enter') {
+      handleSearch(); // Enter 키와 버튼 클릭 모두 handleSearch 함수 호출
     }
   };
 
@@ -50,11 +57,11 @@ const MainInput = () => {
         onChange={handleInputChange}
         onKeyDown={handleKeyDown} // Enter 키 입력 이벤트 추가
       />
-      <Link
-        to={`/Search?query=${encodeURIComponent(inputValue)}`}
+      <button
+        onClick={handleSearch} // 돋보기 버튼 클릭 시 검색 실행
         className="absolute left-3 top-7 transform -translate-y-1/2 text-[#ff5213] text-lg">
         <FontAwesomeIcon icon={faMagnifyingGlass} />
-      </Link>
+      </button>
     </div>
   );
 };
