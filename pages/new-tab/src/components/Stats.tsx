@@ -26,13 +26,22 @@ const slides = [
 
 const Stats: React.FC = () => {
   const [activeSlide, setActiveSlide] = useState(1); // 기본 중앙 카드 설정
-
+  const [isModalOpen, setIsModalOpen] = useState(false); // 모달 상태 관리
   const handlePrev = () => {
     setActiveSlide(prev => (prev === 0 ? slides.length - 1 : prev - 1));
   };
 
   const handleNext = () => {
     setActiveSlide(prev => (prev === slides.length - 1 ? 0 : prev + 1));
+  };
+  const handleCardClick = (index: number) => {
+    if (index === activeSlide) {
+      setIsModalOpen(true); // 모달 열기
+    }
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false); // 모달 닫기
   };
 
   return (
@@ -57,12 +66,13 @@ const Stats: React.FC = () => {
             const scale = isActive ? 1 : 0.8;
 
             return (
-              <div
+              <button
                 key={slide.id}
                 className="absolute transition-transform duration-700 ease-in-out"
                 style={{
                   transform: `translateX(${translateX}px) scale(${scale})`,
-                }}>
+                }}
+                onClick={() => handleCardClick(index)}>
                 <h3 className={`text-center text-black mb-2 ${isActive ? 'text-[30px]' : 'text-[24px]'}`}>
                   {slide.label}
                 </h3>
@@ -72,7 +82,7 @@ const Stats: React.FC = () => {
                   } bg-white border border-gray-200 shadow-lg rounded-2xl flex justify-center items-center cursor-pointer transition-all duration-700`}>
                   <p className={`${isActive ? 'text-[30px]' : 'text-[24px]'} text-gray-600`}>{slide.content}</p>
                 </div>
-              </div>
+              </button>
             );
           })}
         </div>
