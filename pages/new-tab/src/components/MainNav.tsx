@@ -13,10 +13,10 @@ const MainNav = () => {
       </Link>
       <div className="flex items-center space-x-24">
         <Link to="/recommend" className="text-xl font-dm-serif text-[#ff5213]">
-          TODAY's SHORTS
+          TODAY's SHORTSs
         </Link>
         <Link to="/stats" className="text-xl font-dm-serif text-[#ff5213]">
-          STATS
+          STATSs
         </Link>
         <Link to="/mypage" className="text-xl font-dm-serif text-[#ff5213]">
           MY PAGE
