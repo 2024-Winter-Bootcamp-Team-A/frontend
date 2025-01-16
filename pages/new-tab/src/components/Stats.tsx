@@ -43,6 +43,11 @@ const Stats: React.FC = () => {
   const handleCloseModal = () => {
     setIsModalOpen(false); // 모달 닫기
   };
+  const handleModalClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (e.target === e.currentTarget) {
+      handleCloseModal(); // 모달 배경 클릭 시 닫기
+    }
+  };
 
   return (
     <div className="h-[100vh] w-screen bg-white flex justify-center items-center">
@@ -124,7 +129,7 @@ const Stats: React.FC = () => {
                 </div>
               </div>
               <button className="absolute top-4 right-4 text-black text-2xl font-bold" onClick={handleCloseModal}>
-                ✖
+                ✖s
               </button>
             </section>
           </button>
