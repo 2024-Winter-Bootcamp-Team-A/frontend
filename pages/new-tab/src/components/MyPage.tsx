@@ -14,7 +14,7 @@ const MyPage: React.FC = () => {
     shorts: ['wished1', 'wished2'], // 찜한 숏츠 mock 데이터
     savedCards: ['sentence1', 'sentence2'], // 저장 문장 카드 mock 데이터
   });
-  4;
+
   // 로딩 상태를 관리
   const [isLoading, setIsLoading] = useState(true);
 
@@ -129,6 +129,7 @@ const MyPage: React.FC = () => {
             <button
               className="flex flex-col items-center focus:outline-none"
               onClick={() => setIsWatchedModalOpen(true)}>
+              <p className="mb-2 text-sm font-semibold">시청 기록</p> {/* 텍스트를 위로 이동 */}
               <div className="relative w-[120px] h-[180px]">
                 {' '}
                 {/* 기존 크기의 1.3배 */}
@@ -144,13 +145,13 @@ const MyPage: React.FC = () => {
                   </div>
                 ))}
               </div>
-              <p className="mt-2 text-sm font-semibold">시청 기록</p>
             </button>
 
             {/* 버튼 - 찜한 숏츠 */}
             <button
               className="flex flex-col items-center focus:outline-none"
               onClick={() => setIsWishedModalOpen(true)}>
+              <p className="mb-2 text-sm font-semibold">찜한 숏츠</p> {/* 텍스트를 위로 이동 */}
               <div className="relative w-[120px] h-[180px]">
                 {' '}
                 {/* 기존 크기의 1.3배 */}
@@ -166,13 +167,13 @@ const MyPage: React.FC = () => {
                   </div>
                 ))}
               </div>
-              <p className="mt-2 text-sm font-semibold">찜한 숏츠</p>
             </button>
 
             {/* 버튼 - 저장 문장 카드 */}
             <button
               className="flex flex-col items-center focus:outline-none"
               onClick={() => setIsSentenceCardModalOpen(true)}>
+              <p className="mb-2 text-sm font-semibold">저장 문장 카드</p> {/* 텍스트를 위로 이동 */}
               <div className="relative w-[120px] h-[180px]">
                 {' '}
                 {/* 기존 크기의 1.3배 */}
@@ -188,7 +189,6 @@ const MyPage: React.FC = () => {
                   </div>
                 ))}
               </div>
-              <p className="mt-2 text-sm font-semibold">저장 문장 카드</p>
             </button>
           </div>
         </section>
