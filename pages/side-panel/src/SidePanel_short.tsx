@@ -4,7 +4,7 @@ interface SidePanelShortProps {
   onCommentOpen: () => void; // onCommentOpen 속성 정의
 }
 
-const SidePannel_short: React.FC<SidePanelShortProps> = ({ onCommentOpen }) => {
+const SidePannel_short = ({ onCommentOpen }: { onCommentOpen: boolean }) => {
   const [isCommentVisible, setCommentVisible] = useState(false);
 
   const toggleCommentVisibility = () => {
