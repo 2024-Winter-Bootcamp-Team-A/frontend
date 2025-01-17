@@ -5,25 +5,18 @@ import SidePanel_short from './SidePanel_short';
 import Comment from './comment';
 
 function App() {
-  const [currentView, setCurrentView] = useState<'panel' | 'Comment'>('panel');
+  const [currentView, setCurrentView] = useState(false); //true : 댓글 창 닫기 , false : 댓글 창 열기
 
+  const handleOpenComment = () => {
+    setCurrentView(false); // 댓글 창 열기
+  };
   const handleCloseComment = () => {
-    setCurrentView('panel'); // 댓글 창 닫기
+    setCurrentView(true); // 댓글 창 닫기
   };
 
   return (
     <>
-      {currentView === 'panel' && (
-        <div>
-          <SidePanel_short
-            onCommentOpen={() => {
-              setCurrentView('Comment');
-              console.log('comment open');
-            }} // 댓글 열기 이벤트 전달
-          />
-        </div>
-      )}
-      {currentView === 'Comment' && <Comment onClose={handleCloseComment} />} {/* 댓글 창 닫기 이벤트 전달 */}
+      <SidePanel_short onCommentOpen={currentView} />
     </>
   );
 }
