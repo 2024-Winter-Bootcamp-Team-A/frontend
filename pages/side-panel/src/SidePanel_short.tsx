@@ -4,6 +4,7 @@ interface SidePanelShortProps {
   onCommentOpen: () => void; // 댓글 열기 이벤트
 }
 
+
 const SidePanelShort: React.FC<SidePanelShortProps> = ({ onCommentOpen }) => {
   return (
     <div className="h-screen w-full bg-black text-white flex flex-col p-6">

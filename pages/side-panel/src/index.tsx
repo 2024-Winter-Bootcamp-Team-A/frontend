@@ -7,11 +7,14 @@ import RequestShort from './request_short'; // 새로운 파일 import
 
 function App() {
   // 기존 코드 주석 처리: 현재는 RequestShort만 렌더링
-  /*
   const [currentView, setCurrentView] = useState<'panel' | 'Comment'>('panel');
 
+
+  const handleOpenComment = () => {
+    setCurrentView(false); // 댓글 창 열기
+  };
   const handleCloseComment = () => {
-    setCurrentView('panel'); // 댓글 창 닫기
+    setCurrentView(true); // 댓글 창 닫기
   };
 
   return (

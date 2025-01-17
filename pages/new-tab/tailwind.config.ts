@@ -10,6 +10,7 @@ export default {
       fontFamily: {
         'dm-serif': ['"DM Serif Text"'],
         lobster: ['Lobster', 'cursive'],
+        myungjo: ['Myungjo', 'serif'],
       },
       height: {
         'vh-25': '25vh',
