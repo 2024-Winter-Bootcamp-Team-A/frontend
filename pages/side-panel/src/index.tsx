@@ -1,7 +1,7 @@
 import { createRoot } from 'react-dom/client';
 import '@src/index.css';
 import React, { useState } from 'react';
-import SidePanel_short from './SidePanel_short';
+import SidePanelShort from './SidePanel_short';
 import Comment from './comment';
 
 function App() {
@@ -15,15 +15,15 @@ function App() {
     <>
       {currentView === 'panel' && (
         <div>
-          <SidePanel_short
+          <SidePanelShort
             onCommentOpen={() => {
               setCurrentView('Comment');
               console.log('comment open');
-            }} // 댓글 열기 이벤트 전달
+            }}
           />
         </div>
       )}
-      {currentView === 'Comment' && <Comment onClose={handleCloseComment} />} {/* 댓글 창 닫기 이벤트 전달 */}
+      {currentView === 'Comment' && <Comment onClose={handleCloseComment} />}
     </>
   );
 }
