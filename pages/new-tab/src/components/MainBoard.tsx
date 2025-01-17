@@ -1,6 +1,6 @@
 import { useState } from 'react';
 export default function MainBoard() {
-  const [board, setBoard] = useState(true);
+  const [board, setBoard] = useState(false);
   return (
     <div>
       {/* 이미지, 비디오, 버튼 */}
@@ -31,10 +31,11 @@ export default function MainBoard() {
         </div>
         <div
           className={`relative flex items-center transition-transform duration-500 ${board ? '-translate-x-1/2' : ''}`}>
-          <img src={'전광판이미지.png'} alt="전광판 이미지" className="w-screen h-856px" />
+          <img src={'New전광판2.png'} alt="전광판 이미지" className="w-[1790px] h-856px" />
           <video
-            src={chrome.runtime.getURL('sample-video.mp4')} // 비디오 경로 설정
-            className="absolute left-52  inset-0 ml-96  w-800px h-864px rounded-lg shadow-lg"
+            src={'video/final_clip.mp4'} // 비디오 경로 설정
+            className="absolute left-[270px] top-[63px] inset-0 ml-96  w-[420px] h-[640px] rounded-lg shadow-lg bg-black
+            py-4"
             controls
             autoPlay
             loop
