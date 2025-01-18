@@ -1,41 +1,35 @@
-import React, { useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import '@src/index.css';
+import SidePanel from '@src/SidePanel';
+import SideLogin from './SideLogin';
+import SideSignUp from './SideSignUp';
+import SideNav from './components/SideNav';
+import { HashRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import SidePanelShort from './SidePanel_short';
-import Comment from './comment';
 
-function App() {
-  const [currentView, setCurrentView] = useState('panel'); // 'panel' or 'Comment'
-
-  const handleOpenComment = () => {
-    setCurrentView('Comment');
-    console.log('comment open');
-  };
-
-  const handleCloseComment = () => {
-    setCurrentView('panel');
-  };
-
-  return (
-    <>
-      {currentView === 'panel' && (
-        <div>
-          <SidePanelShort onCommentOpen={handleOpenComment} />
-        </div>
-      )}
-      {currentView === 'Comment' && <Comment onClose={handleCloseComment} />}
-    </>
-  );
-}
-
+// 1. "/" : SidePanel
+// 1. "/login" : SideLogin
+// 1. "/signup" : SideSignUp
 function init() {
   const appContainer = document.querySelector('#app-container');
   if (!appContainer) {
-    throw new Error('Cannot find #app-container');
+    throw new Error('Can not find #app-container');
   }
 
   const root = createRoot(appContainer);
-  root.render(<App />);
+  root.render(
+    <Router>
+      <Link to="/">
+        <SideNav />
+      </Link>
+      <Routes>
+        <Route path="/" element={<SidePanel />} />
+        <Route path="/login" element={<SideLogin />} />
+        <Route path="/signup" element={<SideSignUp />} />
+        <Route path="/sidepanel_short" element={<SidePanelShort />} />
+      </Routes>
+    </Router>,
+  );
 }
 
 init();
