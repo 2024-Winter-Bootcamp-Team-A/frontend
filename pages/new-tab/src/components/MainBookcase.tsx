@@ -41,10 +41,9 @@ export default function MainBookcase({ title, direction = 'right' }: { title: st
   };
 
   return (
-    <div className="w-full max-w-full relative mb-40">
+    <div className="w-full max-w-full relative mb-0 overflow-hidden">
       {/* 제목 */}
-      <h2 className={`text-2xl font-bold font-dm-serif mb-2 ml-[160px]`}>{title}</h2>
-
+      <h2 className={`text-2xl font-dm-serif mt-36 mb-[-48px] ml-[108px]`}>{title}</h2> {/* mb-0으로 변경 */}
       {/* 캐러셀 컨테이너 */}
       <div
         className={`relative overflow-hidden z-10 ${direction === 'right' ? 'ml-[50px]' : 'mr-[50px]'}`} // 방향에 따른 마진 조정
@@ -57,7 +56,7 @@ export default function MainBookcase({ title, direction = 'right' }: { title: st
           {products.map((product, index) => (
             <div
               key={index}
-              className="flex-shrink-0"
+              className="flex-shrink-0 mt-0" // 카드 컨테이너의 위쪽 마진 최소화
               style={{
                 width: `${100 / visibleItems}%`,
               }}>
@@ -75,7 +74,6 @@ export default function MainBookcase({ title, direction = 'right' }: { title: st
           ))}
         </div>
       </div>
-
       {/* 이전 버튼 */}
       <button
         onClick={handlePrevious}
@@ -83,7 +81,6 @@ export default function MainBookcase({ title, direction = 'right' }: { title: st
         disabled={currentIndex === 0}>
         ←
       </button>
-
       {/* 다음 버튼 */}
       <button
         onClick={handleNext}
@@ -91,14 +88,13 @@ export default function MainBookcase({ title, direction = 'right' }: { title: st
         disabled={currentIndex >= totalItems - visibleItems}>
         →
       </button>
-
       {/* 받침대 */}
       <div className="w-full h-[60px] relative mt-4">
         <div
           className={`absolute w-[1800px] h-7 bg-gray-300 ${direction === 'right' ? 'left-[50px]' : 'right-[50px]'}`} // 받침대 위치 조정
           style={{
             clipPath: 'polygon(3% 0%, 97% 0%, 100% 100%, 0% 100%)',
-            top: '-30px',
+            top: '-110px',
             zIndex: 0,
           }}
         />
@@ -106,9 +102,11 @@ export default function MainBookcase({ title, direction = 'right' }: { title: st
           className={`absolute w-[1800px] h-7 bg-white shadow-[2px_7px_30px_10px_rgba(0,0,0,0.25)] ${
             direction === 'right' ? 'left-[50px]' : 'right-[50px]'
           }`} // 받침대 그림자 위치 조정
+          style={{
+            top: '-80px',
+          }}
         />
       </div>
-
       {/* 모달 컴포넌트 */}
       {isModalOpen && <ShortsModal onClose={() => setIsModalOpen(false)} />}
     </div>
