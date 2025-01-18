@@ -2,6 +2,7 @@
 .card-container {
     perspective: 1000px; /* 3D 효과를 위한 원근감 설정 */
     cursor: pointer; /* 클릭 가능한 요소임을 나타내기 위해 커서 변경 */
+
   }
   
   .card {
@@ -43,3 +44,28 @@
     margin: 5px 0; /* 각 문장 사이에 간격 추가 */
   }
   
+  @media (max-width: 768px) {
+    .card {
+      width: 200px; /* 작은 화면에서 너비 */
+      height: 300px; /* 작은 화면에서 높이 */
+    }
+    .img {
+        width: 90%;
+        height: 90%;
+    }
+    .card-front {
+        margin-top: 200px;
+        width: 90%;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .card {
+      width: 100px; /* 더 작은 화면에서 너비 */
+      height: 200px; /* 더 작은 화면에서 높이 */
+    }
+    .img {
+        width: 80%;
+        height: 80%;
+    }
+  }

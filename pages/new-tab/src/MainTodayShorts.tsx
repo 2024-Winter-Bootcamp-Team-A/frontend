@@ -1,6 +1,7 @@
 import BookCard from './components/BookCard';
 import React, { useState } from 'react';
 import './MainTodayShorts.css';
+import ShortsModal from './components/ShortsModal';
 
 const sentences = {
   left: ['눈처럼 가볍다고 ', '보배 화이팅.', '그러나 눈에도 무게가 있다.', '이 물방울처럼'],
@@ -10,6 +11,7 @@ const sentences = {
 export default function MainTodayShorts() {
   const [selected, setSelected] = useState<'left' | 'right' | null>(null);
   const [flipped, setFlipped] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false); // 모달 상태 관리
 
   const handleCardClick = (direction: 'left' | 'right') => {
     if (selected === direction) {
@@ -21,18 +23,20 @@ export default function MainTodayShorts() {
     }
   };
   const handlePrimaryAction = () => {
-    console.log('Primary button clicked');
+    alert('저장이 완료되었습니다!');
   };
 
   const handleSecondaryAction = () => {
-    console.log('Secondary button clicked');
+    setIsModalOpen(true);
   };
 
   return (
     <div className="flex flex-col">
-      <div className="pt-40 bg-white h-300px flex justify-center text-2xl font-dm-serif">Today's Shorts!</div>
+      <div className="pt-40 bg-white h-300px flex justify-center text-2xl font-dm-serif md:text-lg lg:text-2xl sm:text-base">
+        Today's Shorts!
+      </div>
       <section className="container">
-        <div className="flex justify-center pb-20 mb-60 h-full">
+        <div className="flex justify-center pb-20 mb-60 h-full lg:scale-100 md:scale-75 sm:scale-50">
           {/* Left Card */}
           <div
             className={`animate-card -translate-x-72 ${
@@ -47,7 +51,10 @@ export default function MainTodayShorts() {
             />
           </div>
 
-          <span className={`text-6xl font-dm-serif ml-56 pt-56 translate-x-5 ${selected ? 'hidden' : ''}`}>VS</span>
+          <span
+            className={`text-6xl vs-text font-dm-serif ml-56 pt-56 translate-x-5 xl:pt-56 ${selected ? 'hidden' : 'block sm:block'}`}>
+            VS
+          </span>
 
           {/* Right Card */}
           <div
@@ -64,7 +71,7 @@ export default function MainTodayShorts() {
           </div>
         </div>
       </section>
-      <div className={`flex justify-center `}>
+      <div className={`flex justify-center xl:scale-100 md:scale-75 sm:scale-50`}>
         {!selected ? (
           <button className="mb-20">
             <img src="리롤버튼.svg" alt="리롤버튼" />
@@ -80,6 +87,7 @@ export default function MainTodayShorts() {
           </div>
         )}
       </div>
+      {isModalOpen && <ShortsModal onClose={() => setIsModalOpen(false)} />}
     </div>
   );
 }

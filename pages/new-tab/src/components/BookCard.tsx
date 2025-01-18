@@ -14,14 +14,14 @@ interface BookCardProps {
 
 export default function BookCard({ sentences, direction, backImage, onClick, isFlipped }: BookCardProps) {
   return (
-    <button className="card-container" onClick={() => onClick(direction)}>
+    <button className="card-container " onClick={() => onClick(direction)}>
       <div className={`card ${isFlipped ? 'flipped' : ''}`}>
         {/* 앞면 */}
         <div className="card-front">
           <img
             src={direction === 'left' ? '왼쪽문장배경.png' : '오른쪽문장배경.png'}
             alt={direction === 'left' ? '왼쪽문장배경' : '오른쪽문장배경'}
-            className="w-full h-full"
+            className="img"
           />
           <span className="text-2xl text-white card-text">
             {'"'}

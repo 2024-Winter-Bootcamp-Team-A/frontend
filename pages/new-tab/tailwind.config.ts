@@ -36,7 +36,7 @@ export default {
         '24': '0.24',
       },
       translate: {
-        '100': '34.5rem',
+        '100': '33.5rem',
       },
       borderRadius: {
         lg: 'var(--radius)',

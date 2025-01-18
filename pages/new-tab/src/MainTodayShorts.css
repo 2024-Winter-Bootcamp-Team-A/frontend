@@ -1,5 +1,8 @@
 .container {
   position: relative; /* 자식 요소의 위치 조정을 위함 */
+
+
+  
 }
 
 .animate-card {
@@ -52,4 +55,32 @@
   }
   
 
+@media (max-width: 768px) {
+
+
+
+
+  .text-6xl {
+    font-size: 3rem;
+    margin-left: 0;
+    padding-top: 20px;
+  }
+
+
+
+
+}
+
+.container {
+    position: relative; /* 컨테이너를 기준으로 위치를 설정 */
+  }
+  
+
+  
+  @media (max-width: 768px) {
+    .vs-text {
+      font-size: 1.5rem; /* 작은 화면에서 VS 텍스트 크기를 줄임 */
+      
+    }
+  }
 
