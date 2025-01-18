@@ -25,32 +25,47 @@ const SidePanelShort: React.FC = () => {
       <h1 className="text-2xl font-bold text-orange-500 mb-6 text-left">Liverary</h1>
 
       {/* 동영상 영역 */}
-      <div className="flex justify-center items-center flex-grow relative">
-        <div className="w-[330px] h-[550px] rounded-lg overflow-hidden relative">
+      <div className="flex justify-center items-center flex-grow relative" style={{ marginBottom: '100px' }}>
+        <div className="w-[400px] h-[650px] rounded-lg overflow-hidden relative">
           <video className="w-full h-full object-cover" controls src="/final_clip(1).mp4">
             Your browser does not support the video tag.
           </video>
 
           {/* 텍스트 - 동영상 위 */}
           <p className="absolute bottom-16 left-4 text-sm text-gray-300 text-left whitespace-nowrap">
-            한 줄, 세계에서 이 계절이 시작된다 🎈
+            한 줄, 세계에서 이 계절이 시작된다
           </p>
 
           {/* 아이콘 섹션 */}
           <div className="absolute bottom-20 right-4 flex flex-col items-center space-y-4">
-            <button className="w-8 h-8" aria-label="Add to wishlist">
-              <img src="wish.svg" alt="Wish" className="w-full h-full" />
-            </button>
-            <button className="w-8 h-8" aria-label="Share video">
-              <img src="share.svg" alt="Share" className="w-full h-full" />
-            </button>
-            <button
-              className="w-8 h-8"
-              aria-label="Open comments"
-              onClick={() => setIsCommentOpen(prev => !prev)} // 댓글창 토글
-            >
-              <img src="comment.svg" alt="Comment" className="w-full h-full" />
-            </button>
+            <div className="relative group">
+              <button className="w-8 h-8" aria-label="Add to wishlist">
+                <img src="wish.svg" alt="Wish" className="w-full h-full" />
+              </button>
+              <span className="absolute right-12 top-1/2 transform -translate-y-1/2 text-gray-300 text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                찜하기
+              </span>
+            </div>
+            <div className="relative group">
+              <button className="w-8 h-8" aria-label="Share video">
+                <img src="share.svg" alt="Share" className="w-full h-full" />
+              </button>
+              <span className="absolute right-12 top-1/2 transform -translate-y-1/2 text-gray-300 text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                공유하기
+              </span>
+            </div>
+            <div className="relative group">
+              <button
+                className="w-8 h-8"
+                aria-label="Open comments"
+                onClick={() => setIsCommentOpen(prev => !prev)} // 댓글창 토글
+              >
+                <img src="comment.svg" alt="Comment" className="w-full h-full" />
+              </button>
+              <span className="absolute right-12 top-1/2 transform -translate-y-1/2 text-gray-300 text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                댓글창열기
+              </span>
+            </div>
           </div>
         </div>
       </div>
@@ -67,9 +82,8 @@ const SidePanelShort: React.FC = () => {
             onChange={e => setNewComment(e.target.value)}
             onKeyPress={handleKeyPress}
             placeholder="댓글 추가"
-            className="flex-1 border-b border-gray-300 p-2 text-black bg-gray-100"
+            className="flex-1 bg-gray-100 p-2 text-black rounded"
           />
-
           <button
             onClick={handleAddComment}
             className="ml-2 bg-orange-500 text-white px-4 py-2 rounded-lg hover:bg-orange-600">
@@ -99,7 +113,7 @@ const SidePanelShort: React.FC = () => {
                 onChange={e => setNewComment(e.target.value)}
                 onKeyPress={handleKeyPress}
                 placeholder="댓글 추가"
-                className="flex-1 border-b border-gray-300 p-2 text-black"
+                className="flex-1 bg-gray-100 p-2 text-black rounded"
               />
               <button
                 onClick={handleAddComment}
