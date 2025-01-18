@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 const SidePanelShort: React.FC = () => {
   const [isCommentOpen, setIsCommentOpen] = useState(false); // 전체 댓글 창 열림 상태
@@ -22,8 +23,9 @@ const SidePanelShort: React.FC = () => {
   return (
     <div className="h-screen w-full bg-black text-white flex flex-col p-6 relative">
       {/* 상단 헤더 */}
-      <h1 className="text-2xl font-bold text-orange-500 mb-6 text-left">Liverary</h1>
-
+      <Link to="/">
+        <h1 className="text-2xl font-bold text-orange-500 mb-6 text-left">Liverary</h1>
+      </Link>
       {/* 동영상 영역 */}
       <div className="flex justify-center items-center flex-grow relative" style={{ marginBottom: '100px' }}>
         <div className="w-[400px] h-[650px] rounded-lg overflow-hidden relative">
