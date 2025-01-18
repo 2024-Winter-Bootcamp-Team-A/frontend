@@ -1,107 +1,126 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef } from 'react';
+import Comment from './Comment'; // 전체 댓글 컴포넌트
 
-interface CommentData {
-  id: number;
-  username: string;
-  content: string;
-}
+const SidePanelShort: React.FC = () => {
+  const [isCommentOpen, setIsCommentOpen] = useState(false); // 전체 댓글 창 열림 상태
+  const [translateY, setTranslateY] = useState(0); // 하단 입력 필드의 위치
+  const startYRef = useRef<number | null>(null); // 드래그 시작 위치 참조
+  const [newComment, setNewComment] = useState(''); // 댓글 입력 상태
 
-interface CommentProps {
-  onClose: () => void; // 댓글창 닫기 이벤트
-}
+  // 드래그 시작 핸들러
+  const handleTouchStart = (e: React.TouchEvent | React.MouseEvent) => {
+    const startY = 'touches' in e ? e.touches[0].clientY : e.clientY;
+    startYRef.current = startY;
+  };
 
-const Comment: React.FC<CommentProps> = ({ onClose }) => {
-  const [comments, setComments] = useState<CommentData[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [newComment, setNewComment] = useState<string>(''); // 새로운 댓글 입력 상태
-  const inputRef = useRef<HTMLInputElement>(null); // 입력 필드 포커스 관리
+  // 드래그 중 핸들러 (위로만 슬라이드 허용)
+  const handleTouchMove = (e: React.TouchEvent | React.MouseEvent) => {
+    if (startYRef.current !== null) {
+      const currentY = 'touches' in e ? e.touches[0].clientY : e.clientY;
+      const deltaY = currentY - startYRef.current;
 
-  useEffect(() => {
-    // API 요청 시뮬레이션
-    const fetchComments = async () => {
-      try {
-        setIsLoading(true);
-        const response = await new Promise<CommentData[]>(resolve =>
-          setTimeout(() => {
-            resolve(
-              Array(10)
-                .fill(null)
-                .map((_, index) => ({
-                  id: index + 1,
-                  username: `아이디 ${index + 1}`,
-                  content: '가독성은 있으나 급하게 마무리 되는 느낌이라 아쉬워요..',
-                })),
-            );
-          }, 1000),
-        );
-        setComments(response);
-      } catch (error) {
-        console.error('Failed to fetch comments:', error);
-      } finally {
-        setIsLoading(false);
+      // 위로 슬라이드하는 경우만 translateY 업데이트
+      if (deltaY < 0) {
+        const newTranslateY = Math.max(translateY + deltaY, -300); // 최소값 제한 (-300px)
+        setTranslateY(newTranslateY);
       }
-    };
+    }
+  };
 
-    fetchComments();
-  }, []);
+  // 드래그 종료 핸들러
+  const handleTouchEnd = () => {
+    startYRef.current = null;
 
+    // 드래그 종료 후 상태 전환
+    if (translateY < -150) {
+      setTranslateY(-300); // 완전히 열린 상태
+      setIsCommentOpen(true);
+    } else {
+      setTranslateY(0); // 닫힌 상태
+      setIsCommentOpen(false);
+    }
+  };
+
+  // 댓글 추가 핸들러
   const handleAddComment = () => {
-    if (newComment.trim() === '') return;
-
-    const newCommentData: CommentData = {
-      id: comments.length + 1,
-      username: '나',
-      content: newComment,
-    };
-
-    setComments([newCommentData, ...comments]);
-    setNewComment('');
-    inputRef.current?.focus();
+    if (newComment.trim() === '') return; // 빈 입력값은 무시
+    console.log('새 댓글:', newComment); // 실제 등록 로직 대체 가능
+    setNewComment(''); // 입력 초기화
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-end z-50">
-      <div className="bg-white text-gray-900 rounded-t-lg shadow-lg w-full max-w-md p-6 relative">
-        <button onClick={onClose} className="absolute top-2 right-2 text-gray-400 hover:text-gray-600">
-          ✕
-        </button>
-        <div className="w-full flex justify-between items-center border-b border-gray-300 pb-2">
-          <h2 className="text-lg font-bold text-gray-800">댓글 {comments.length}개</h2>
-          <div className="h-1 w-10 bg-gray-300 rounded-full"></div>
+    <div className="h-screen w-full bg-black text-white flex flex-col p-6 relative">
+      {/* 상단 헤더 */}
+      <h1 className="text-2xl font-bold text-orange-500 mb-6 text-left">Liverary</h1>
+
+      {/* 동영상 영역 */}
+      <div className="flex justify-center items-center flex-grow relative">
+        <div className="w-[330px] h-[550px] rounded-lg overflow-hidden relative">
+          <video className="w-full h-full object-cover" controls src="/final_clip(1).mp4">
+            Your browser does not support the video tag.
+          </video>
+
+          {/* 텍스트 - 동영상 위 */}
+          <p className="absolute bottom-16 left-4 text-sm text-gray-300 text-left whitespace-nowrap">
+            한 줄, 세계에서 이 계절이 시작된다 🎈
+          </p>
+
+          {/* 하트 및 공유 버튼 - 동영상 위 */}
+          <div className="absolute bottom-[100px] right-4 flex flex-col items-center space-y-4">
+            <img src="wish.svg" className="w-8 h-8 cursor-pointer" alt="Like" />
+            <img src="share.svg" className="w-8 h-8 cursor-pointer" alt="Share" />
+          </div>
         </div>
-        <div className="w-full my-4 flex items-center space-x-2">
+      </div>
+
+      {/* 댓글 입력란 - 슬라이딩 모달 */}
+      <div
+        className="fixed bottom-0 left-0 w-full bg-white p-4 rounded-t-lg shadow-lg transition-transform"
+        style={{ transform: `translateY(${translateY}px)` }}
+        onMouseDown={handleTouchStart}
+        onMouseMove={handleTouchMove}
+        onMouseUp={handleTouchEnd}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}>
+        <div className="flex justify-between items-center border-b pb-2 mb-4">
+          <h2 className="text-lg font-bold">댓글 입력</h2>
+          <button
+            onClick={() => {
+              setTranslateY(0);
+              setIsCommentOpen(false);
+            }}
+            className="text-gray-500 hover:text-gray-800 text-lg font-bold">
+            ×
+          </button>
+        </div>
+        <div className="flex items-center">
           <input
-            ref={inputRef}
             type="text"
-            placeholder="댓글 추가"
             value={newComment}
             onChange={e => setNewComment(e.target.value)}
-            className="flex-1 bg-gray-100 border-b border-gray-400 text-gray-800 py-2 px-2"
+            placeholder="댓글 추가"
+            className="flex-1 border-b border-gray-300 p-2"
           />
           <button
             onClick={handleAddComment}
-            className="bg-orange-500 text-white px-4 py-2 rounded-lg hover:bg-orange-600">
-            입력
+            className="ml-2 bg-orange-500 text-white px-4 py-2 rounded-lg hover:bg-orange-600">
+            등록
           </button>
         </div>
-        <div className="w-full overflow-y-auto space-y-4 max-h-[70vh]">
-          {isLoading ? (
-            <p className="text-center text-gray-500">댓글을 불러오는 중...</p>
-          ) : (
-            comments.map(comment => (
-              <div key={comment.id} className="flex items-start space-x-4">
-                <div className="w-8 h-8 bg-orange-500 rounded-full"></div>
-                <div>
-                  <p className="text-sm text-gray-500">{comment.username}</p>
-                  <p>{comment.content}</p>
-                </div>
-              </div>
-            ))
-          )}
-        </div>
       </div>
+
+      {/* 전체 댓글 창 */}
+      {isCommentOpen && (
+        <Comment
+          onClose={() => {
+            setTranslateY(0); // 댓글창 닫을 때 위치 초기화
+            setIsCommentOpen(false);
+          }}
+        />
+      )}
     </div>
   );
 };
 
-export default Comment;
+export default SidePanelShort;
