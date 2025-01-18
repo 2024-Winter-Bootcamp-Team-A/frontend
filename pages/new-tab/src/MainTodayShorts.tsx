@@ -23,7 +23,7 @@ export default function MainTodayShorts() {
     }
   };
   const handlePrimaryAction = () => {
-    console.log('Primary button clicked');
+    alert('저장이 완료되었습니다!');
   };
 
   const handleSecondaryAction = () => {
@@ -71,7 +71,7 @@ export default function MainTodayShorts() {
           </div>
         </div>
       </section>
-      <div className={`flex justify-center md:scale-75 sm:scale-50`}>
+      <div className={`flex justify-center xl:scale-100 md:scale-75 sm:scale-50`}>
         {!selected ? (
           <button className="mb-20">
             <img src="리롤버튼.svg" alt="리롤버튼" />
