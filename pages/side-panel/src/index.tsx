@@ -19,9 +19,6 @@ function init() {
   const root = createRoot(appContainer);
   root.render(
     <Router>
-      <Link to="/">
-        <SideNav />
-      </Link>
       <Routes>
         <Route path="/" element={<SidePanel />} />
         <Route path="/login" element={<SideLogin />} />
