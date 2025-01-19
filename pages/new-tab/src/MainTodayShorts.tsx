@@ -4,7 +4,7 @@ import './MainTodayShorts.css';
 import ShortsModal from './components/ShortsModal';
 
 const sentences = {
-  left: ['눈처럼 가볍다고 ', '보배 화이팅.', '그러나 눈에도 무게가 있다.', '이 물방울처럼'],
+  left: ['눈처럼 가볍다고 ', '화이팅.', '그러나 눈에도 무게가 있다.', '이 물방울처럼'],
   right: ['눈처럼 가볍다고', '사람들은 말한다.', '그러나 눈에도 무게가 있다.', '이 물방울처럼'],
 };
 
@@ -22,6 +22,7 @@ export default function MainTodayShorts() {
       setFlipped(true);
     }
   };
+
   const handlePrimaryAction = () => {
     alert('저장이 완료되었습니다!');
   };
@@ -32,10 +33,12 @@ export default function MainTodayShorts() {
 
   return (
     <div className="flex flex-col">
-      <div className="pt-40 bg-white h-300px flex justify-center text-2xl font-dm-serif md:text-lg lg:text-2xl sm:text-base">
+      {/* 상단 타이틀 */}
+      <div className="pt-44 bg-white h-300px flex justify-center text-2xl font-dm-serif md:text-lg lg:text-2xl sm:text-base">
         Today's Shorts!
       </div>
       <section className="container">
+        {/* 카드 섹션 */}
         <div className="flex justify-center pb-20 mb-60 h-full lg:scale-100 md:scale-75 sm:scale-50">
           {/* Left Card */}
           <div
@@ -51,6 +54,7 @@ export default function MainTodayShorts() {
             />
           </div>
 
+          {/* 가운데 VS 텍스트 */}
           <span
             className={`text-6xl vs-text font-dm-serif ml-56 pt-56 translate-x-5 xl:pt-56 ${selected ? 'hidden' : 'block sm:block'}`}>
             VS
@@ -72,6 +76,7 @@ export default function MainTodayShorts() {
         </div>
       </section>
       <div className={`flex justify-center xl:scale-100 md:scale-75 sm:scale-50`}>
+        {/* 리롤 버튼 또는 액션 버튼 */}
         {!selected ? (
           <button className="mb-20">
             <img src="리롤버튼.svg" alt="리롤버튼" />
@@ -87,6 +92,7 @@ export default function MainTodayShorts() {
           </div>
         )}
       </div>
+      {/* 모달 */}
       {isModalOpen && <ShortsModal onClose={() => setIsModalOpen(false)} />}
     </div>
   );
