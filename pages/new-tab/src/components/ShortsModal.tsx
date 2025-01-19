@@ -14,6 +14,30 @@ const ShortsModal: React.FC<ShortsModalProps> = ({ onClose }) => {
       className="fixed inset-0 z-50 flex justify-center items-center bg-black bg-opacity-50"
       onClick={onClose} // 모달 배경 클릭 시 모달 닫기
     >
+      {/* 아이콘 섹션 */}
+      <div
+        className={`absolute flex flex-col items-center space-y-4 z-50 transition-all duration-300`}
+        style={{
+          top: '50%',
+          transform: 'translateY(-50%)',
+          right: isCommentVisible ? '416px' : '16px', // 댓글창 열리면 아이콘 위치 조정
+        }}
+        onClick={e => e.stopPropagation()} // 이벤트 전파 방지
+      >
+        <button className="w-8 h-8 bg-gray-200 rounded-full shadow hover:bg-gray-300">
+          <img src="wish.svg" alt="Wish" className="w-full h-full" />
+        </button>
+        <button className="w-8 h-8 bg-gray-200 rounded-full shadow hover:bg-gray-300">
+          <img src="share.svg" alt="Share" className="w-full h-full" />
+        </button>
+        <button
+          className="w-8 h-8 bg-gray-200 rounded-full shadow hover:bg-gray-300"
+          onClick={() => setIsCommentVisible(true)} // 댓글창 열기
+        >
+          <img src="comment.svg" alt="Comment" className="w-full h-full" />
+        </button>
+      </div>
+
       {/* 카드 플립 버튼 */}
       <div
         className="absolute top-10 flex justify-center w-full"
@@ -55,22 +79,6 @@ const ShortsModal: React.FC<ShortsModalProps> = ({ onClose }) => {
               <video className="w-full h-full" controls autoPlay muted>
                 <source src="/video.mp4" type="video/mp4" />
               </video>
-              {/* 아이콘 섹션 */}
-              <div className="absolute bottom-20 right-4 flex flex-col items-center space-y-4">
-                <button className="w-8 h-8" aria-label="Add to wishlist">
-                  <img src="wish.svg" alt="Wish" className="w-full h-full" />
-                </button>
-                <button className="w-8 h-8" aria-label="Share video">
-                  <img src="share.svg" alt="Share" className="w-full h-full" />
-                </button>
-                <button
-                  className="w-8 h-8"
-                  aria-label="Open comments"
-                  onClick={() => setIsCommentVisible(true)} // 댓글창 열기
-                >
-                  <img src="comment.svg" alt="Comment" className="w-full h-full" />
-                </button>
-              </div>
             </div>
           )}
 
@@ -115,21 +123,6 @@ const ShortsModal: React.FC<ShortsModalProps> = ({ onClose }) => {
               <div className="w-full flex justify-center mt-4">
                 <button className="px-6 py-2 bg-orange-500 text-white font-bold rounded-lg hover:bg-orange-600 shadow-lg transition-all">
                   도서페이지로 이동
-                </button>
-              </div>
-
-              {/* 아이콘 섹션 (오른쪽 하단) */}
-              <div className="absolute bottom-20 right-4 flex flex-col items-center space-y-4">
-                <button className="w-8 h-8 bg-gray-200 rounded-full shadow hover:bg-gray-300">
-                  <img src="wish.svg" alt="Like" className="w-full h-full" />
-                </button>
-                <button className="w-8 h-8 bg-gray-200 rounded-full shadow hover:bg-gray-300">
-                  <img src="share.svg" alt="Share" className="w-full h-full" />
-                </button>
-                <button
-                  className="w-8 h-8 bg-gray-200 rounded-full shadow hover:bg-gray-300"
-                  onClick={() => setIsCommentVisible(true)}>
-                  <img src="comment.svg" alt="Comment" className="w-full h-full" />
                 </button>
               </div>
             </div>

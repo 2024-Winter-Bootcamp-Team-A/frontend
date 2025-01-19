@@ -14,8 +14,11 @@ const SideInput: React.FC<SideInputProps> = ({ placeholder, isPassWord, value, o
     <div>
       <input
         type={isPassWord ? 'password' : 'text'}
+        id={id}
+        name={name}
         className="text-black text-base font-normal font-dm-serif border rounded-3xl px-8 py-2 text-center border-black"
         placeholder={!isFocused ? placeholder : ''}
+
         value={value}
         onChange={e => onChange(e.target.value)}
         onFocus={() => setIsFocused(true)} // 포커스 시 상태 변경
