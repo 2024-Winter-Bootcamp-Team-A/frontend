@@ -83,7 +83,7 @@ const CommentModal: React.FC<CommentModalProps> = ({ onClose }) => {
           onChange={e => setNewComment(e.target.value)}
           onKeyPress={handleKeyPress} // Enter 키로 댓글 추가
           placeholder="댓글 추가"
-          className="flex-1 border-b border-gray-300 p-2"
+          className="flex-1 border-b  bg-gray-100 border-none border-gray-300 p-2"
         />
         <button
           onClick={handleAddComment}
