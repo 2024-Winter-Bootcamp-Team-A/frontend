@@ -117,3 +117,8 @@
     @apply bg-background text-foreground;
   }
 }
+
+@font-face {
+  font-family: 'Bookk Myungjo OTF';
+  src: url('./assets/fonts/BookkMyungjo.otf') format('opentype');
+}

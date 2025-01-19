@@ -77,16 +77,16 @@ export default function MainBookcase({ title, direction = 'right' }: { title: st
       {/* 이전 버튼 */}
       <button
         onClick={handlePrevious}
-        className="absolute top-1/2 left-0 transform -translate-y-1/2 bg-gray-200 p-3 rounded-full shadow hover:bg-gray-300 disabled:opacity-50 z-20"
+        className="absolute top-1/2 left-4 transform -translate-y-1/2 bg-gray-200 p-3 rounded-full shadow hover:bg-gray-300 disabled:opacity-50 z-20"
         disabled={currentIndex === 0}>
-        ←
+        <img src="왼쪽화살표.svg" alt="왼쪽 화살표" className="w-4 h-4" />
       </button>
       {/* 다음 버튼 */}
       <button
         onClick={handleNext}
-        className="absolute top-1/2 right-0 transform -translate-y-1/2 bg-gray-200 p-3 rounded-full shadow hover:bg-gray-300 disabled:opacity-50 z-20"
+        className="absolute top-1/2 right-4 transform -translate-y-1/2 bg-gray-200 p-3 rounded-full shadow hover:bg-gray-300 disabled:opacity-50 z-20"
         disabled={currentIndex >= totalItems - visibleItems}>
-        →
+        <img src="오른쪽화살표.svg" alt="오른쪽 화살표" className="w-4 h-4" />
       </button>
       {/* 받침대 */}
       <div className="w-full h-[60px] relative mt-4">
