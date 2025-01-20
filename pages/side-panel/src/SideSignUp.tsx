@@ -61,7 +61,7 @@ const SideSignUp = () => {
             <span className="text-white text-xl font-normal font-dm-serif">Sign Up</span>
           </button>
           {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
-          <Link to="/sidepanel_short">목업쇼츠보기</Link>
+          {/* <Link to="/sidepanel_short">목업쇼츠보기</Link> */}
         </div>
       </div>
     </div>
