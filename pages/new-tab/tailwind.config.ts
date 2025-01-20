@@ -8,9 +8,9 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        'dm-serif': ['"DM Serif Text"'],
+        'dm-serif': ['"DM Serif Text"', 'serif'], // Google Fonts 추가
+        myungjo: ['"Bookk Myungjo OTF"', 'serif'], // 로컬 폰트 추가
         lobster: ['Lobster', 'cursive'],
-        myungjo: ['Myungjo', 'serif'],
       },
       height: {
         'vh-25': '25vh',
