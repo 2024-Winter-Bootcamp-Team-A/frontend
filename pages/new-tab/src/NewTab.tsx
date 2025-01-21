@@ -8,14 +8,22 @@ const NewTab = () => {
   const [userInfo, setUserInfo] = useState(null);
 
   useEffect(() => {
-    // chrome.runtime.onMessage를 통해 메시지 수신
-    chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+    const handleMessage = (message, sender, sendResponse) => {
+      console.log('Message received in NewTab:', message); // 메시지 내용 확인
+
       if (message.action === 'newTabUserInfo' && message.data) {
-        setUserInfo(message.data);
-        console.log('User info received in new tab:', message.data);
+        setUserInfo(message.data); // 상태 업데이트
+        console.log('User info updated in NewTab:', message.data);
         sendResponse({ status: 'success' });
       }
-    });
+    };
+
+    chrome.runtime.onMessage.addListener(handleMessage);
+
+    // 컴포넌트 unmount 시 listener 제거
+    return () => {
+      chrome.runtime.onMessage.removeListener(handleMessage);
+    };
   }, []);
 
   return (
@@ -26,6 +34,13 @@ const NewTab = () => {
         <MainBookcase title="Trending Now" direction="left" />
         <MainBookcase title="Editor's Choice" direction="right" />
       </div>
+      {/* 디버깅용 유저 정보 출력 */}
+      {userInfo && (
+        <div className="mt-4 p-4 bg-gray-100 rounded">
+          <h3>User Info</h3>
+          <pre>{JSON.stringify(userInfo, null, 2)}</pre>
+        </div>
+      )}
     </div>
   );
 };

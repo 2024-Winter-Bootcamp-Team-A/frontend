@@ -9,6 +9,7 @@ export default function MainBookcase({ title, direction = 'right' }: { title: st
   const [currentIndex, setCurrentIndex] = useState(initialIndex); // 현재 인덱스 상태 관리
 
   const [isModalOpen, setIsModalOpen] = useState(false); // 모달 상태 관리
+  const [selectedBookId, setSelectedBookId] = useState<number | null>(null); // 선택된 책 ID 상태
   const products = [
     '길s',
     '시녀 이야기',
@@ -36,8 +37,9 @@ export default function MainBookcase({ title, direction = 'right' }: { title: st
     }
   };
 
-  const handleCardClick = () => {
-    setIsModalOpen(true); // 카드 클릭 시 모달 열기
+  const handleCardClick = (bookId: number) => {
+    setSelectedBookId(bookId); // 선택된 책 ID 설정
+    setIsModalOpen(true); // 모달 열기
   };
 
   return (
@@ -62,7 +64,9 @@ export default function MainBookcase({ title, direction = 'right' }: { title: st
               }}>
               <button
                 className="w-full h-full transform scale-[0.6] transition-transform hover:scale-[0.75] focus:outline-none"
-                onClick={handleCardClick}>
+                onClick={() => handleCardClick(index + 1)}>
+                {' '}
+                {/* bookId로 index + 1 전달 */}
                 <Card>
                   <CardContent className="flex flex-col aspect-[3/4] items-center justify-center p-4 bg-gray-100 space-y-2 shadow-2xl hover:bg-gray-200">
                     <span className="text-3xl font-semibold">{index + 1}</span>
@@ -108,7 +112,12 @@ export default function MainBookcase({ title, direction = 'right' }: { title: st
         />
       </div>
       {/* 모달 컴포넌트 */}
-      {isModalOpen && <ShortsModal onClose={() => setIsModalOpen(false)} />}
+      {isModalOpen && selectedBookId !== null && (
+        <ShortsModal
+          onClose={() => setIsModalOpen(false)}
+          bookId={selectedBookId} // 선택된 bookId 전달
+        />
+      )}
     </div>
   );
 }

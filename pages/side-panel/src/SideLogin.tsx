@@ -102,7 +102,6 @@ const SideLogin = () => {
             Login
           </button>
         </div>
-
         {/* 회원가입 버튼 */}
         <div>
           <Link to="/signup">
