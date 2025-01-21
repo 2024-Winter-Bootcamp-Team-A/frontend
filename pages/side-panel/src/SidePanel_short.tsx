@@ -15,54 +15,74 @@ const SidePanelShort: React.FC = () => {
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const fetchShortsData = async (currentUrl: string) => {
-      try {
-        console.log(currentUrl, 'dkd');
+  // 숏츠 데이터 가져오기 함수
+  const fetchShortsData = async (currentUrl: string) => {
+    try {
+      console.log(`Fetching data for URL: ${currentUrl}`);
 
-        // 백엔드에 현재 탭 URL로 숏츠 정보 요청
-        const response = await fetch(
-          `http://localhost:8000/api/v1/shorts/side?book_url=${encodeURIComponent(currentUrl)}`,
-          {
-            method: 'GET',
-            headers: {
-              'Content-Type': 'application/json',
-              accept: 'application/json',
-            },
+      const response = await fetch(
+        `http://localhost:8000/api/v1/shorts/side?book_url=${encodeURIComponent(currentUrl)}`,
+        {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            accept: 'application/json',
           },
-        );
+        },
+      );
 
-        const data = await response.json();
+      const data = await response.json();
 
-        if (response.ok) {
-          // 숏츠 URL 설정
-          setStorage_url(data.storage_url || null);
-          setTitle(data.title || '');
-          setBookId(data.book_id || 0);
+      if (response.ok) {
+        setStorage_url(data.storage_url || null);
+        setTitle(data.title || '');
+        setBookId(data.book_id || 0);
+      } else {
+        setStorage_url(null); // 숏츠 데이터가 없으면 null
+      }
+    } catch (error) {
+      console.error('Error fetching shorts data:', error);
+      setStorage_url(null);
+    } finally {
+      setIsLoading(false); // 로딩 완료
+    }
+  };
+
+  useEffect(() => {
+    const handleTabUpdate = (tabId: number, changeInfo: chrome.tabs.TabChangeInfo, tab: chrome.tabs.Tab) => {
+      // URL이 변경되었는지 확인
+      if (changeInfo.url) {
+        const isGyoBoBook = changeInfo.url.startsWith('https://product.kyobobook.co.kr/detail');
+        if (isGyoBoBook) {
+          fetchShortsData(changeInfo.url); // 새 URL로 데이터 가져오기
         } else {
-          setStorage_url(null); // 숏츠 정보가 없으면 null
+          console.log('탭 URL이 교보문고 URL이 아닙니다. 창을 닫습니다.');
+          window.close();
         }
-      } catch (error) {
-        console.error('Error fetching shorts data:', error);
-        setStorage_url(null);
-      } finally {
-        setIsLoading(false); // 로딩 완료
       }
     };
 
-    // 현재 탭 URL 가져오기
+    // 초기 현재 탭 URL 가져오기
     chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
       const tab = tabs[0];
-      const currentUrl = tab.url || ''; // 현재 탭의 URL
+      const currentUrl = tab.url || '';
       const isGyoBoBook = currentUrl.startsWith('https://product.kyobobook.co.kr/detail');
 
       if (!isGyoBoBook) {
         console.log('탭 URL이 교보문고 URL이 아닙니다. 창을 닫습니다.');
         window.close();
       } else {
-        fetchShortsData(currentUrl); // 숏츠 데이터 가져오기
+        fetchShortsData(currentUrl); // 초기 URL 데이터 가져오기
       }
     });
+
+    // URL 변경 이벤트 리스너 추가
+    chrome.tabs.onUpdated.addListener(handleTabUpdate);
+
+    // 컴포넌트 언마운트 시 이벤트 리스너 제거
+    return () => {
+      chrome.tabs.onUpdated.removeListener(handleTabUpdate);
+    };
   }, []);
 
   type CommentResponse = {
