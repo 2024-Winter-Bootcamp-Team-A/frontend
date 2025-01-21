@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { AddComment } from './api/AddComment';
-import Request_short from './request_short';
+import Request_short from './Request_short';
 
 const SidePanelShort: React.FC = () => {
   const [isCommentOpen, setIsCommentOpen] = useState(false); // 전체 댓글 창 열림 상태

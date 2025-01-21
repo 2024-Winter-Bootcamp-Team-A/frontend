@@ -27,4 +27,4 @@ const Request_short: React.FC = () => {
   );
 };
 
-export default request_short;
+export default Request_short;
