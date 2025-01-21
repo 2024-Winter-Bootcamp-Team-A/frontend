@@ -2,10 +2,13 @@ import '@src/SidePanel.css';
 import { useStorage, withErrorBoundary, withSuspense } from '@extension/shared';
 import SideButton from './components/SideButton';
 import SideNav from './components/SideNav';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+
 const SidePanel = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(null); // 초기값을 null로 설정하여 로딩 상태를 나타냄
+  const navigate = useNavigate(); // useNavigate 훅 사용
+
   // 로그인 상태 확인
   useEffect(() => {
     const checkLoginStatus = async () => {
@@ -20,16 +23,17 @@ const SidePanel = () => {
     };
     checkLoginStatus();
   }, []);
+
   // 로그인 처리 함수
   const handleLogin = async () => {
     try {
-      // 임시 토큰 저장 (실제로는 로그인 API를 호출하여 토큰을 받아와야 함)
       await chrome.storage.local.set({ token: 'your-token' });
       setIsLoggedIn(true); // 토큰 저장 후 로그인 상태로 업데이트
     } catch (error) {
       console.error('Login failed:', error);
     }
   };
+
   // 로그아웃 처리 함수
   const handleLogout = async () => {
     try {
@@ -39,20 +43,27 @@ const SidePanel = () => {
       console.error('Logout failed:', error);
     }
   };
+
+  // 쇼츠 재생 페이지로 이동 처리 함수
+  const handleShortPageNavigation = () => {
+    navigate('/sidepanel_short'); // React Router를 사용한 경로 이동
+  };
+
   // 로딩 중 UI
   if (isLoggedIn === null) {
     return <div>Loading...</div>;
   }
+
   return (
     <div>
       <Link to="/">
         <SideNav />
       </Link>
-      <div className="flex:1 h-full overflow-y-auto w-full bg-white overflow-hidden mt-7 ">
+      <div className="flex:1 h-full overflow-y-auto w-full bg-white overflow-hidden mt-7">
         {/* 비디오 관련 섹션 */}
         <div className="bg-gradient-to-t from-black via-black to-black opacity-60 mix-blend-darken" />
         {/* 비디오 배경 */}
-        <div className="w-[320px] h-[640px] bg-gradient-to-b  from-[#999999] via-[#CCCCCC] to-white ml-5 mt-2 pl-3 pt-2">
+        <div className="w-[320px] h-[640px] bg-gradient-to-b from-[#999999] via-[#CCCCCC] to-white ml-5 mt-2 pl-3 pt-2">
           <div className="w-[324px] h-[171px]">
             <span className="font-['AppleSDGothicNeoEB00'] text-3xl font-normal text-white">
               어떤 책을 읽을까
@@ -74,13 +85,13 @@ const SidePanel = () => {
         </div>
         {/* 조건부 렌더링: 로그인 상태에 따라 버튼 표시 */}
         {isLoggedIn ? (
-          // 로그인 상태: "뉴탭 이동" 버튼과 "로그아웃" 버튼 표시
+          // 로그인 상태: "쇼츠 페이지 이동" 버튼과 "로그아웃" 버튼 표시
           <div>
             <button
               className="w-40 h-12 mt-16 ml-24 bg-[#FF5213] rounded-2xl flex items-center justify-center shadow-md hover:bg-[#FF3F0E] transition duration-200"
-              onClick={() => (window.location.href = '/new-tab')} // 뉴탭으로 이동
+              onClick={handleShortPageNavigation} // 쇼츠 페이지로 이동
             >
-              <SideButton name="뉴탭 이동" path="/new-tab" />
+              <SideButton name="쇼츠 페이지 이동" path="/sidepanel_short" />
             </button>
             <button
               className="w-40 h-12 mt-4 ml-24 bg-[#FF5213] rounded-2xl flex items-center justify-center shadow-md hover:bg-[#FF3F0E] transition duration-200"
@@ -102,4 +113,5 @@ const SidePanel = () => {
     </div>
   );
 };
-export default withErrorBoundary(withSuspense(SidePanel, <div> Loading ... </div>), <div> Error Occur </div>);
+
+export default withErrorBoundary(withSuspense(SidePanel, <div>Loading...</div>), <div>Error Occur</div>);
