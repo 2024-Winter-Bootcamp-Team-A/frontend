@@ -14,6 +14,15 @@ const SidePanelShort: React.FC = () => {
   const [bookId, setBookId] = useState(0);
 
   const navigate = useNavigate();
+  //   useEffect(() => {
+  //     // 현재 URL 확인 및 알림 처리
+  //     const currentUrl = window.location.href;
+  //     const kyoboBookUrlPattern = /^https:\/\/product\.kyobobook\.co\.kr\/detail\/?/;
+
+  //     if (!kyoboBookUrlPattern.test(currentUrl)) {
+  //       alert('관심있는 도서의 상세 정보 페이지로 이동해주세요.');
+  //     }
+  //   }, []);
 
   useEffect(() => {
     // chrome.storage.local에서 현재 탭 URL 가져오기

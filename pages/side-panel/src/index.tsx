@@ -13,9 +13,10 @@ const App = () => {
 
     chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
       const tab = tabs[0];
-      const isGyoBoBook = tab.url?.startsWith('https://product.kyoubobook.co.kr/detail/');
+      const isGyoBoBook = tab.url?.startsWith('https://product.kyobobook.co.kr/detail');
       if (!isGyoBoBook) {
-        // window.close();
+        console.log(tabs);
+        window.close();
       }
     });
   }, []);
