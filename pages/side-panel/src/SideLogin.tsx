@@ -13,41 +13,58 @@ const SideLogin = () => {
 
   const handleLogin = async () => {
     try {
-      console.log('Sending login request...', { email, password });
+      // 전송 데이터 출력
+      const loginData = { email, password };
+      console.log('전송 데이터:', loginData);
 
+      // 로그인 요청 전송
       const response = await fetch('http://localhost:8000/api/v1/users/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify(loginData),
       });
 
       if (response.ok) {
         const data = await response.json();
         console.log('Login successful:', data);
 
+        const userInfo = {
+          email: loginData.email, // 이메일 정보 포함
+          name: data.name || 'Unknown', // 서버 응답에 name 포함
+          id: data.id || 'Unknown', // 서버 응답에 id 포함
+        };
+
         chrome.storage.local.set({ token: data.token }, () => {
           console.log('Token saved to local storage.');
-        });
 
-        chrome.runtime.sendMessage({ action: 'userLogin', data: { token: data.token, email } }, response => {
-          console.log('Message sent to new tab:', response);
-        });
+          // 메시지 전송
+          chrome.runtime.sendMessage(
+            { action: 'newTabUserInfo', data: userInfo }, // action과 data 포함
+            response => {
+              if (chrome.runtime.lastError) {
+                console.error('Runtime error:', chrome.runtime.lastError.message);
+              } else {
+                console.log('Message sent successfully to NewTab:', response);
+              }
+            },
+          );
 
-        navigate('/');
+          navigate('/'); // 상태 저장 후 메인 페이지로 이동
+        });
       } else {
         const errorData = await response.json();
         console.error('Login failed:', errorData);
 
-        // 로그인 실패 시 알람 띄우기
+        // 로그인 실패 시 알림 표시
         alert('로그인 실패! 맞게 입력했는지 다시 한번 확인해주십시오');
       }
     } catch (err) {
       console.error('An unexpected error occurred:', err);
 
-      // 예외 발생 시에도 알람 띄우기
-      alert('로그인 실패! 맞게 입력했는지 다시 한번 확인해주십시오');
+      // 예외 발생 시 알림 표시
+      alert('로그인 실패! 잠시 후 다시 시도해 주십시오');
     }
   };
 
@@ -81,12 +98,19 @@ const SideLogin = () => {
 
         {/* 로그인 버튼 */}
         <div>
-          <SideButton name="Login" path="/" />
+          <button onClick={handleLogin} className="bg-[#ff5213] text-white py-2 px-4 rounded hover:bg-[#e64512]">
+            Login
+          </button>
         </div>
 
-        <Link to={'/signup'}>
-          <div className="text-[#ff5213] text-base font-normal font-dm-serif mt-4">Don't have an account?</div>
-        </Link>
+        {/* 회원가입 버튼 */}
+        <div>
+          <Link to="/signup">
+            <div className="text-[#ff5213] text-base font-normal font-dm-serif mt-4 hover:underline">
+              Don't have an account? Sign up here.
+            </div>
+          </Link>
+        </div>
       </div>
     </div>
   );
