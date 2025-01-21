@@ -14,6 +14,7 @@ const App = () => {
     chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
       const tab = tabs[0];
       const isGyoBoBook = tab.url?.startsWith('https://product.kyobobook.co.kr/detail');
+      console.log(tabs);
       if (!isGyoBoBook) {
         console.log(tabs);
         window.close();

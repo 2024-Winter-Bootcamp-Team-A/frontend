@@ -14,25 +14,15 @@ const SidePanelShort: React.FC = () => {
   const [bookId, setBookId] = useState(0);
 
   const navigate = useNavigate();
-  //   useEffect(() => {
-  //     // 현재 URL 확인 및 알림 처리
-  //     const currentUrl = window.location.href;
-  //     const kyoboBookUrlPattern = /^https:\/\/product\.kyobobook\.co\.kr\/detail\/?/;
-
-  //     if (!kyoboBookUrlPattern.test(currentUrl)) {
-  //       alert('관심있는 도서의 상세 정보 페이지로 이동해주세요.');
-  //     }
-  //   }, []);
 
   useEffect(() => {
-    // chrome.storage.local에서 현재 탭 URL 가져오기
-    chrome.storage.local.get(['currentTabUrl'], async result => {
-      const currentTabUrl = result.currentTabUrl || '';
-
+    const fetchShortsData = async (currentUrl: string) => {
       try {
+        console.log(currentUrl, 'dkd');
+
         // 백엔드에 현재 탭 URL로 숏츠 정보 요청
         const response = await fetch(
-          `http://localhost:8000/api/v1/shorts/side?book_url=${encodeURIComponent(currentTabUrl)}`,
+          `http://localhost:8000/api/v1/shorts/side?book_url=${encodeURIComponent(currentUrl)}`,
           {
             method: 'GET',
             headers: {
@@ -58,8 +48,23 @@ const SidePanelShort: React.FC = () => {
       } finally {
         setIsLoading(false); // 로딩 완료
       }
+    };
+
+    // 현재 탭 URL 가져오기
+    chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
+      const tab = tabs[0];
+      const currentUrl = tab.url || ''; // 현재 탭의 URL
+      const isGyoBoBook = currentUrl.startsWith('https://product.kyobobook.co.kr/detail');
+
+      if (!isGyoBoBook) {
+        console.log('탭 URL이 교보문고 URL이 아닙니다. 창을 닫습니다.');
+        window.close();
+      } else {
+        fetchShortsData(currentUrl); // 숏츠 데이터 가져오기
+      }
     });
   }, []);
+
   type CommentResponse = {
     id: number;
     user: number;
