@@ -1,10 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 const SidePanelShort: React.FC = () => {
   const [isCommentOpen, setIsCommentOpen] = useState(false); // 전체 댓글 창 열림 상태
   const [newComment, setNewComment] = useState(''); // 댓글 입력 상태
   const [comments, setComments] = useState<{ user: string; text: string }[]>([]); // 댓글 목록 상태
+
+  useEffect(() => {
+    // 현재 URL 확인 및 알림 처리
+    const currentUrl = window.location.href;
+    const kyoboBookUrlPattern = /^https:\/\/product\.kyobobook\.co\.kr\/detail\/?/;
+
+    if (!kyoboBookUrlPattern.test(currentUrl)) {
+      alert('관심있는 도서의 상세 정보 페이지로 이동해주세요.');
+    }
+  }, []);
 
   // 댓글 추가 핸들러
   const handleAddComment = () => {
