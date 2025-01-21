@@ -3,10 +3,33 @@ import '@src/index.css';
 import SidePanel from '@src/SidePanel';
 import SideLogin from './SideLogin';
 import SideSignUp from './SideSignUp';
-import SideNav from './components/SideNav';
 import { HashRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import SidePanelShort from './SidePanel_short';
+import { useEffect } from 'react';
 
+const App = () => {
+  useEffect(() => {
+    console.log('SidePanel Loaded');
+
+    chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
+      const tab = tabs[0];
+      const isGyoBoBook = tab.url?.startsWith('https://product.kyoubobook.co.kr/detail/');
+      if (!isGyoBoBook) {
+        // window.close();
+      }
+    });
+  }, []);
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<SidePanel />} />
+        <Route path="/login" element={<SideLogin />} />
+        <Route path="/signup" element={<SideSignUp />} />
+        <Route path="/sidepanel_short" element={<SidePanelShort />} />
+      </Routes>
+    </Router>
+  );
+};
 // 1. "/" : SidePanel
 // 1. "/login" : SideLogin
 // 1. "/signup" : SideSignUp
@@ -17,16 +40,7 @@ function init() {
   }
 
   const root = createRoot(appContainer);
-  root.render(
-    <Router>
-      <Routes>
-        <Route path="/" element={<SidePanel />} />
-        <Route path="/login" element={<SideLogin />} />
-        <Route path="/signup" element={<SideSignUp />} />
-        <Route path="/sidepanel_short" element={<SidePanelShort />} />
-      </Routes>
-    </Router>,
-  );
+  root.render(<App />);
 }
 
 init();

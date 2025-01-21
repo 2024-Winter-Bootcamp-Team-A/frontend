@@ -15,7 +15,7 @@ const SideLogin = () => {
     try {
       console.log('Sending login request...', { email, password });
 
-      const response = await fetch('http://localhost:8000/swagger/users/login', {
+      const response = await fetch('http://localhost:8000/api/v1/users/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

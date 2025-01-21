@@ -1,6 +1,6 @@
 import React from 'react';
 
-const request_short: React.FC = () => {
+const Request_short: React.FC = () => {
   return (
     <div className="flex justify-center items-center h-screen bg-gray-100">
       <div className="w-[330px] h-[550px] bg-gradient-to-b from-white to-gray-300 border border-gray-300 rounded-lg shadow-md overflow-hidden">

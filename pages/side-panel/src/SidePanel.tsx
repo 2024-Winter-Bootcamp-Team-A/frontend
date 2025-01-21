@@ -3,7 +3,19 @@ import { useStorage, withErrorBoundary, withSuspense } from '@extension/shared';
 import SideButton from './components/SideButton';
 import SideNav from './components/SideNav';
 import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+
 const SidePanel = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  useEffect(() => {
+    chrome.storage.local.get(['token'], result => {
+      if (result.token) {
+        setIsLoggedIn(true);
+      } else {
+        setIsLoggedIn(false);
+      }
+    });
+  });
   return (
     <div>
       <Link to="/">
@@ -35,7 +47,15 @@ const SidePanel = () => {
         </div>
 
         <button className="w-40 h-12 mt-16 ml-24 bg-[#ff5213] rounded-2xl flex items-center justify-center shadow-md hover:bg-[#ff3f0e] transition duration-200">
-          <SideButton name="Login / Sign up" path="/login" />
+          {isLoggedIn ? (
+            <Link to="/shorts">
+              <SideButton name="쇼츠 보러가기" path="/sidepanel_short" />
+            </Link>
+          ) : (
+            <Link to="/login">
+              <SideButton name="Login / Sign up" path="/login" />
+            </Link>
+          )}
         </button>
       </div>
     </div>
