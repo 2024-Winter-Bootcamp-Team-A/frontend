@@ -1,17 +1,63 @@
-import React, { useState } from 'react';
-import CommentModal from './CommentModal'; // CommentModal 컴포넌트 가져오기
+
+import React, { useState, useEffect } from 'react';
+// import axios from 'axios';
 
 interface ShortsModalProps {
-  onClose: () => void; // 모달 닫기 함수
-  bookId: number; // 책 ID를 prop으로 받아옴
-}
+  onClose: () => void; // 모달 닫기 함수 정의
+  bookId: number | null; // 숏츠의 ID
 
 const ShortsModal: React.FC<ShortsModalProps> = ({ onClose, bookId }) => {
   const [isFlipped, setIsFlipped] = useState(false); // 카드 회전 상태
   const [isCommentVisible, setIsCommentVisible] = useState(false); // 댓글창 상태
+  const [videoData, setVideoData] = useState<any>(null); // 동영상 데이터
+  const [comments, setComments] = useState<string[]>([]); // 댓글 리스트 상태
+  const [newComment, setNewComment] = useState(''); // 새 댓글 입력값 상태
+
+  // 동영상 데이터 로드
+  //   useEffect(() => {
+  //     axios
+  //       .get(`http://localhost:8000/api/v1/shorts/${bookId}/individual`)
+  //       .then(response => {
+  //         setVideoData(response.data); // API에서 가져온 동영상 데이터
+  //       })
+  //       .catch(error => {
+  //         console.error('Failed to fetch video data:', error);
+  //       });
+  //   }, [bookId]);
+
+  //   // 댓글 리스트 가져오기
+  //   useEffect(() => {
+  //     if (isCommentVisible) {
+  //       axios
+  //         .get(`http://localhost:8000/api/v1/shorts/${bookId}/comments`)
+  //         .then(response => {
+  //           setComments(response.data); // API에서 가져온 댓글 데이터
+  //         })
+  //         .catch(error => {
+  //           console.error('Failed to fetch comments:', error);
+  //         });
+  //     }
+  //   }, [isCommentVisible, bookId]);
+
+  // 댓글 생성하기
+  const handleAddComment = () => {
+    // if (!newComment.trim()) return; // 빈 댓글 방지
+    // axios
+    //   .post(`http://localhost:8000/api/v1/shorts/${bookId}/comments`, {
+    //     content: newComment,
+    //   })
+    //   .then(response => {
+    //     setComments(prevComments => [...prevComments, response.data]); // 새로운 댓글 추가
+    //     setNewComment(''); // 입력값 초기화
+    //   })
+    //   .catch(error => {
+    //     console.error('Failed to add comment:', error);
+    //   });
+  };
+
 
   return (
-    <div
+    <button
       className="fixed inset-0 z-50 flex justify-center items-center bg-black bg-opacity-50"
       onClick={onClose} // 모달 배경 클릭 시 모달 닫기
     >
@@ -147,7 +193,7 @@ const ShortsModal: React.FC<ShortsModalProps> = ({ onClose, bookId }) => {
           </button>
         </div>
       </div>
-    </div>
+    </button>
   );
 };
 
