@@ -102,6 +102,15 @@ const SideLogin = () => {
             Login
           </button>
         </div>
+
+        {/* 회원가입 버튼 */}
+        <div>
+          <Link to="/signup">
+            <div className="text-[#ff5213] text-base font-normal font-dm-serif mt-4 hover:underline">
+              Don't have an account? Sign up here.
+            </div>
+          </Link>
+        </div>
       </div>
     </div>
   );
