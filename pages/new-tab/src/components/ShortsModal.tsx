@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+// import axios from 'axios';
 
 interface ShortsModalProps {
   onClose: () => void; // 모달 닫기 함수 정의
@@ -14,30 +14,30 @@ const ShortsModal: React.FC<ShortsModalProps> = ({ onClose, bookId }) => {
   const [newComment, setNewComment] = useState(''); // 새 댓글 입력값 상태
 
   // 동영상 데이터 로드
-  useEffect(() => {
-    axios
-      .get(`http://localhost:8000/api/v1/shorts/${bookId}/individual`)
-      .then(response => {
-        setVideoData(response.data); // API에서 가져온 동영상 데이터
-      })
-      .catch(error => {
-        console.error('Failed to fetch video data:', error);
-      });
-  }, [bookId]);
+  //   useEffect(() => {
+  //     axios
+  //       .get(`http://localhost:8000/api/v1/shorts/${bookId}/individual`)
+  //       .then(response => {
+  //         setVideoData(response.data); // API에서 가져온 동영상 데이터
+  //       })
+  //       .catch(error => {
+  //         console.error('Failed to fetch video data:', error);
+  //       });
+  //   }, [bookId]);
 
-  // 댓글 리스트 가져오기
-  useEffect(() => {
-    if (isCommentVisible) {
-      axios
-        .get(`http://localhost:8000/api/v1/shorts/${bookId}/comments`)
-        .then(response => {
-          setComments(response.data); // API에서 가져온 댓글 데이터
-        })
-        .catch(error => {
-          console.error('Failed to fetch comments:', error);
-        });
-    }
-  }, [isCommentVisible, bookId]);
+  //   // 댓글 리스트 가져오기
+  //   useEffect(() => {
+  //     if (isCommentVisible) {
+  //       axios
+  //         .get(`http://localhost:8000/api/v1/shorts/${bookId}/comments`)
+  //         .then(response => {
+  //           setComments(response.data); // API에서 가져온 댓글 데이터
+  //         })
+  //         .catch(error => {
+  //           console.error('Failed to fetch comments:', error);
+  //         });
+  //     }
+  //   }, [isCommentVisible, bookId]);
 
   // 댓글 생성하기
   const handleAddComment = () => {

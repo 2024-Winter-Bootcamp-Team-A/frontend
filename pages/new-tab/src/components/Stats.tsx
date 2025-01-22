@@ -29,7 +29,7 @@ const slides = [
 
 const Stats: React.FC = () => {
   const [activeSlide, setActiveSlide] = useState(1); // 기본 중앙 카드 설정
-  const [isModalOpen, setIsModalOpen] = useState(true); // 모달 상태 관리
+  const [isModalOpen, setIsModalOpen] = useState(false); // 모달 상태 관리
   const handlePrev = () => {
     setActiveSlide(prev => (prev === 0 ? slides.length - 1 : prev - 1));
   };
