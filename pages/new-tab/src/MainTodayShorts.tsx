@@ -9,6 +9,7 @@ export default function MainTodayShorts() {
   const [isModalOpen, setIsModalOpen] = useState(false); // 모달 상태 관리
   const [shortsData, setShortsData] = useState<{ id: number; sentence: string; image: string }[]>([]); // 숏츠 데이터 상태
   const [isLoading, setIsLoading] = useState(true);
+  const [selectedBookId, setSelectedBookId] = useState<number | null>(null);
 
   // API 호출 함수
   const fetchTodayShorts = async () => {
@@ -27,6 +28,7 @@ export default function MainTodayShorts() {
       }
 
       const data = await response.json();
+      console.log(data);
       setShortsData(data.shorts || []); // 숏츠 데이터를 상태에 저장
     } catch (error) {
       console.error('Error fetching today shorts:', error);
@@ -40,17 +42,42 @@ export default function MainTodayShorts() {
   }, []);
 
   const handleCardClick = (direction: 'left' | 'right') => {
+    const selectedBook = shortsData[direction === 'left' ? 0 : 1];
+
     if (selected === direction) {
       setFlipped(false);
-      setTimeout(() => setSelected(null), 600);
+      setTimeout(() => {
+        setSelected(null);
+        setSelectedBookId(null);
+      }, 600);
     } else {
       setSelected(direction);
       setFlipped(true);
+      setSelectedBookId(selectedBook.id); // 선택된 카드의 책 ID 저장
     }
   };
 
-  const handlePrimaryAction = () => {
-    alert('저장이 완료되었습니다!');
+  const handlePrimaryAction = async (bookId: number) => {
+    try {
+      const response = await fetch(`http://localhost:8000/api/v1/todayshort/${bookId}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          accept: 'application/json',
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to save today short');
+      }
+
+      const data = await response.json();
+      alert(`저장이 완료되었습니다! ${bookId}`);
+      console.log('저장된 데이터:', data);
+    } catch (error) {
+      console.error('Error saving today short:', error);
+      alert('저장에 실패했습니다. 다시 시도해주세요.');
+    }
   };
 
   const handleSecondaryAction = () => {
@@ -121,7 +148,15 @@ export default function MainTodayShorts() {
           </button>
         ) : (
           <div className="flex gap-4 mb-20 mt-80">
-            <button className="bg-[#ff5213] text-white py-2 px-4 rounded" onClick={handlePrimaryAction}>
+            <button
+              className="bg-[#ff5213] text-white py-2 px-4 rounded"
+              onClick={() => {
+                if (selectedBookId) {
+                  handlePrimaryAction(selectedBookId);
+                } else {
+                  alert('저장할 책이 선택되지 않았습니다.');
+                }
+              }}>
               카드 저장하기
             </button>
             <button className="bg-[#ff5213] text-white py-2 px-4 rounded" onClick={handleSecondaryAction}>
@@ -131,7 +166,7 @@ export default function MainTodayShorts() {
         )}
       </div>
       {/* 모달 */}
-      {isModalOpen && <ShortsModal onClose={() => setIsModalOpen(false)} />}
+      {/* {isModalOpen && selectedBookId !== null && <ShortsModal bookId={selectedBookId} onClose={() => setIsModalOpen(false)} />} */}
     </div>
   );
 }

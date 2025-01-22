@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 
 interface ShortsModalProps {
   onClose: () => void; // 모달 닫기 함수 정의
-  bookId: number; // 숏츠의 ID
+  bookId: number | null; // 숏츠의 ID
 }
 
 const ShortsModal: React.FC<ShortsModalProps> = ({ onClose, bookId }) => {
@@ -41,22 +41,22 @@ const ShortsModal: React.FC<ShortsModalProps> = ({ onClose, bookId }) => {
 
   // 댓글 생성하기
   const handleAddComment = () => {
-    if (!newComment.trim()) return; // 빈 댓글 방지
-    axios
-      .post(`http://localhost:8000/api/v1/shorts/${bookId}/comments`, {
-        content: newComment,
-      })
-      .then(response => {
-        setComments(prevComments => [...prevComments, response.data]); // 새로운 댓글 추가
-        setNewComment(''); // 입력값 초기화
-      })
-      .catch(error => {
-        console.error('Failed to add comment:', error);
-      });
+    // if (!newComment.trim()) return; // 빈 댓글 방지
+    // axios
+    //   .post(`http://localhost:8000/api/v1/shorts/${bookId}/comments`, {
+    //     content: newComment,
+    //   })
+    //   .then(response => {
+    //     setComments(prevComments => [...prevComments, response.data]); // 새로운 댓글 추가
+    //     setNewComment(''); // 입력값 초기화
+    //   })
+    //   .catch(error => {
+    //     console.error('Failed to add comment:', error);
+    //   });
   };
 
   return (
-    <div
+    <button
       className="fixed inset-0 z-50 flex justify-center items-center bg-black bg-opacity-50"
       onClick={onClose} // 모달 배경 클릭 시 모달 닫기
     >
@@ -127,7 +127,7 @@ const ShortsModal: React.FC<ShortsModalProps> = ({ onClose, bookId }) => {
           )}
         </div>
       </div>
-    </div>
+    </button>
   );
 };
 
