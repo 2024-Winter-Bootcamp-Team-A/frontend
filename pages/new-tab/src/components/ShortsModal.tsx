@@ -1,6 +1,5 @@
-
 import React, { useState, useEffect } from 'react';
-// import axios from 'axios';
+import CommentModal from './CommentModal'; // CommentModal 컴포넌트 가져오기
 
 interface ShortsModalProps {
   onClose: () => void; // 모달 닫기 함수 정의
@@ -9,52 +8,72 @@ interface ShortsModalProps {
 const ShortsModal: React.FC<ShortsModalProps> = ({ onClose, bookId }) => {
   const [isFlipped, setIsFlipped] = useState(false); // 카드 회전 상태
   const [isCommentVisible, setIsCommentVisible] = useState(false); // 댓글창 상태
-  const [videoData, setVideoData] = useState<any>(null); // 동영상 데이터
-  const [comments, setComments] = useState<string[]>([]); // 댓글 리스트 상태
-  const [newComment, setNewComment] = useState(''); // 새 댓글 입력값 상태
+  const [shortsData, setShortsData] = useState<{ videoUrl: string; title: string; bookUrl: string } | null>(null); // 숏츠 데이터 상태
+  const [detailData, setDetailData] = useState<{
+    views: number;
+    wishes: number;
+    shares: number;
+    visits: number;
+    quote: string;
+  } | null>(null); // 상세 정보 데이터 상태
 
-  // 동영상 데이터 로드
-  //   useEffect(() => {
-  //     axios
-  //       .get(`http://localhost:8000/api/v1/shorts/${bookId}/individual`)
-  //       .then(response => {
-  //         setVideoData(response.data); // API에서 가져온 동영상 데이터
-  //       })
-  //       .catch(error => {
-  //         console.error('Failed to fetch video data:', error);
-  //       });
-  //   }, [bookId]);
+  // 숏츠 API 데이터 가져오기
+  useEffect(() => {
+    const fetchShortsData = async () => {
+      try {
+        const response = await fetch(`http://localhost:8000/api/v1/shorts/${bookId}`);
+        if (!response.ok) {
+          throw new Error('Failed to fetch shorts data');
+        }
+        const data = await response.json();
+        console.log('Shorts Data Fetched:', data);
+        setShortsData({ videoUrl: data.storage_url, title: data.title, bookUrl: data.book_url }); // API 응답 수정
+      } catch (error) {
+        console.error('Error fetching shorts data:', error);
+      }
+    };
 
-  //   // 댓글 리스트 가져오기
-  //   useEffect(() => {
-  //     if (isCommentVisible) {
-  //       axios
-  //         .get(`http://localhost:8000/api/v1/shorts/${bookId}/comments`)
-  //         .then(response => {
-  //           setComments(response.data); // API에서 가져온 댓글 데이터
-  //         })
-  //         .catch(error => {
-  //           console.error('Failed to fetch comments:', error);
-  //         });
-  //     }
-  //   }, [isCommentVisible, bookId]);
+    fetchShortsData();
+  }, [bookId]);
 
-  // 댓글 생성하기
-  const handleAddComment = () => {
-    // if (!newComment.trim()) return; // 빈 댓글 방지
-    // axios
-    //   .post(`http://localhost:8000/api/v1/shorts/${bookId}/comments`, {
-    //     content: newComment,
-    //   })
-    //   .then(response => {
-    //     setComments(prevComments => [...prevComments, response.data]); // 새로운 댓글 추가
-    //     setNewComment(''); // 입력값 초기화
-    //   })
-    //   .catch(error => {
-    //     console.error('Failed to add comment:', error);
-    //   });
+  // 설명창 데이터 가져오기
+  useEffect(() => {
+    const fetchDetailData = async () => {
+      try {
+        const response = await fetch(`http://localhost:8000/api/v1/shorts/${bookId}/detail`);
+        if (!response.ok) {
+          throw new Error('Failed to fetch detail data');
+        }
+        const data = await response.json();
+        console.log('Detail Data Fetched:', data);
+        setDetailData({
+          views: data.views,
+          wishes: data.wishes,
+          shares: data.shares,
+          visits: data.visits,
+          quote: data.quote,
+        });
+      } catch (error) {
+        console.error('Error fetching detail data:', error);
+      }
+    };
+
+    if (isFlipped) {
+      fetchDetailData(); // 카드가 뒤집힐 때만 호출
+    }
+  }, [bookId, isFlipped]);
+
+  const handleVideoEnd = () => {
+    console.log('쇼츠 재생 완료.');
   };
 
+  const handleBookRedirect = () => {
+    if (shortsData?.bookUrl) {
+      window.location.href = shortsData.bookUrl; // 도서 페이지로 이동
+    } else {
+      console.error('Book URL not available.');
+    }
+  };
 
   return (
     <button
@@ -93,20 +112,20 @@ const ShortsModal: React.FC<ShortsModalProps> = ({ onClose, bookId }) => {
             perspective: '1000px',
           }}>
           {/* 앞면: 비디오 */}
-          {!isFlipped && (
+          {!isFlipped && shortsData && (
             <div
               className="absolute w-full h-full bg-black rounded-lg"
               style={{
                 backfaceVisibility: 'hidden',
               }}>
-              <video className="w-full h-full" controls autoPlay muted>
-                <source src="/video.mp4" type="video/mp4" />
+              <video className="w-full h-full" controls autoPlay muted onEnded={handleVideoEnd}>
+                <source src={shortsData.videoUrl || '/fallback-video.mp4'} type="video/mp4" />
               </video>
             </div>
           )}
 
           {/* 뒷면: 기본 정보 */}
-          {isFlipped && (
+          {isFlipped && detailData && (
             <div
               className="absolute w-full h-full bg-white rounded-lg flex flex-col p-6"
               style={{
@@ -114,37 +133,38 @@ const ShortsModal: React.FC<ShortsModalProps> = ({ onClose, bookId }) => {
                 backfaceVisibility: 'hidden',
               }}>
               {/* 책 제목 */}
-              <h3 className="text-lg font-bold text-gray-800 mb-6">너의 이름은</h3>
+              <h3 className="text-lg font-bold text-gray-800 mb-6">{shortsData?.title}</h3>
 
               {/* 최상단: 기본 정보 */}
               <div className="w-full flex justify-between items-center border border-orange-500 rounded-full py-2 px-4 text-center text-sm text-gray-700 mb-4">
                 <div>
                   <p>Views</p>
-                  <p className="text-orange-500 font-bold">34</p>
+                  <p className="text-orange-500 font-bold">{detailData.views}</p>
                 </div>
                 <div>
                   <p>Wishes</p>
-                  <p className="text-orange-500 font-bold">34</p>
+                  <p className="text-orange-500 font-bold">{detailData.wishes}</p>
                 </div>
                 <div>
                   <p>Shares</p>
-                  <p className="text-orange-500 font-bold">34</p>
+                  <p className="text-orange-500 font-bold">{detailData.shares}</p>
                 </div>
                 <div>
                   <p>Book Visits</p>
-                  <p className="text-orange-500 font-bold">34</p>
+                  <p className="text-orange-500 font-bold">{detailData.visits}</p>
                 </div>
               </div>
 
               {/* 중앙: 문구 */}
               <blockquote className="text-center text-gray-600 italic text-xl leading-relaxed flex-grow flex items-center justify-center">
-                "눈처럼 가볍다고 사람들은 말한다.
-                <br /> 그러나 눈에도 무게가 있다. <br /> 이 물방울처럼"
+                "{detailData.quote}"
               </blockquote>
 
               {/* 하단: 도서페이지로 이동 버튼 */}
               <div className="w-full flex justify-center mt-4">
-                <button className="px-6 py-2 bg-orange-500 text-white font-bold rounded-lg hover:bg-orange-600 shadow-lg transition-all">
+                <button
+                  className="px-6 py-2 bg-orange-500 text-white font-bold rounded-lg hover:bg-orange-600 shadow-lg transition-all"
+                  onClick={handleBookRedirect}>
                   도서페이지로 이동
                 </button>
               </div>
@@ -168,7 +188,7 @@ const ShortsModal: React.FC<ShortsModalProps> = ({ onClose, bookId }) => {
           </div>
         )}
 
-        {/* 아이콘 섹션 (모달 컨테이너의 오른쪽) */}
+        {/* 아이콘 섹션 */}
         <div
           className="absolute flex flex-col items-center space-y-4"
           style={{
