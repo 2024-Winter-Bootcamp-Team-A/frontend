@@ -38,6 +38,7 @@ export default function MainBookcase({ title, direction = 'right' }: { title: st
   };
 
   const handleCardClick = (bookId: number) => {
+    console.log('선택된 책 ID:', bookId); // 클릭된 책의 ID를 콘솔에 출력
     setSelectedBookId(bookId); // 선택된 책 ID 설정
     setIsModalOpen(true); // 모달 열기
   };
