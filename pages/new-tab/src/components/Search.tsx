@@ -1,27 +1,49 @@
 import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
-// 목업 데이터 정의
-const mockData = [
-  { id: 1, title: 'React Basics', description: 'Learn the basics of React.' },
-  { id: 2, title: 'Advanced React', description: 'Dive deep into React hooks and patterns.' },
-  { id: 3, title: 'React Router', description: 'Master routing in React applications.' },
-  { id: 4, title: 'React State Management', description: 'Explore state management techniques.' },
-];
-
 const Search: React.FC = () => {
   const [searchParams] = useSearchParams(); // 쿼리스트링 추출
   const query = searchParams.get('query') || ''; // 검색어
-  const [filteredData, setFilteredData] = useState(mockData); // 필터링된 데이터 상태
+  const [filteredData, setFilteredData] = useState<any[]>([]); // 필터링된 데이터 상태
+  const [isLoading, setIsLoading] = useState(true); // 로딩 상태
+  const [error, setError] = useState<string | null>(null); // 에러 상태
 
-  // 검색어에 따라 데이터 필터링
+  // 검색어에 따라 API 호출
   useEffect(() => {
-    if (query) {
-      const results = mockData.filter(item => item.title.toLowerCase().includes(query.toLowerCase()));
-      setFilteredData(results); // 검색 결과 업데이트
-    } else {
-      setFilteredData(mockData); // 검색어가 없으면 전체 데이터 표시
-    }
+    const fetchSearchResults = async () => {
+      if (!query) {
+        setFilteredData([]); // 검색어가 없으면 빈 배열로 초기화
+        setIsLoading(false);
+        return;
+      }
+
+      setIsLoading(true);
+      setError(null); // 기존 에러 초기화
+
+      try {
+        const response = await fetch(`http://localhost:8000/api/v1/shorts/search?search=${encodeURIComponent(query)}`, {
+          method: 'GET',
+          headers: {
+            Accept: 'application/json',
+            'X-CSRFTOKEN': 'Zo5cPxYa22NXMnBHb7GzJECmCAyOmSmVyUdVPPDikypYhGBEQxzbrRVODrPDNB8o',
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to fetch search results');
+        }
+
+        const data = await response.json();
+        setFilteredData(data); // API 응답 데이터 설정
+      } catch (error) {
+        console.error('Error fetching search results:', error);
+        setError('검색 결과를 가져오는 데 실패했습니다.');
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchSearchResults();
   }, [query]);
 
   return (
@@ -32,20 +54,23 @@ const Search: React.FC = () => {
           <span className="text-black">을 검색하신 결과입니다.</span>
         </h2>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {filteredData.length > 0 ? (
-            filteredData.map(item => (
+        {isLoading ? (
+          <p className="text-gray-500">로딩 중...</p>
+        ) : error ? (
+          <p className="text-red-500">{error}</p>
+        ) : filteredData.length > 0 ? (
+          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            {filteredData.map((item: any) => (
               <div
-                key={item.id}
-                className="w-[240px] h-[280px] bg-white border border-gray-200 shadow-lg flex flex-col justify-center items-center p-4">
-                <h3 className="text-lg font-bold text-gray-700 mb-2">{item.title}</h3>
-                <p className="text-sm text-gray-500">{item.description}</p>
+                key={item.book_id}
+                className="w-full max-w-[240px] h-[320px] bg-white border border-gray-200 shadow-lg mx-auto">
+                <img src={item.image} alt={item.book_id} className="w-full h-full object-cover rounded" />
               </div>
-            ))
-          ) : (
-            <p className="text-gray-500 col-span-full">검색 결과가 없습니다. 다른 검색어를 입력해보세요.</p>
-          )}
-        </div>
+            ))}
+          </div>
+        ) : (
+          <p className="text-gray-500 col-span-full">검색 결과가 없습니다. 다른 검색어를 입력해보세요.</p>
+        )}
       </div>
     </div>
   );

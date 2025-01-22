@@ -2,9 +2,8 @@ import React, { useState, useEffect } from 'react';
 import CommentModal from './CommentModal'; // CommentModal 컴포넌트 가져오기
 
 interface ShortsModalProps {
-  onClose: () => void; // 모달 닫기 함수
-  bookId: number; // 책 ID를 prop으로 받아옴
-}
+  onClose: () => void; // 모달 닫기 함수 정의
+  bookId: number | null; // 숏츠의 ID
 
 const ShortsModal: React.FC<ShortsModalProps> = ({ onClose, bookId }) => {
   const [isFlipped, setIsFlipped] = useState(false); // 카드 회전 상태
@@ -77,7 +76,7 @@ const ShortsModal: React.FC<ShortsModalProps> = ({ onClose, bookId }) => {
   };
 
   return (
-    <div
+    <button
       className="fixed inset-0 z-50 flex justify-center items-center bg-black bg-opacity-50"
       onClick={onClose} // 모달 배경 클릭 시 모달 닫기
     >
@@ -214,7 +213,7 @@ const ShortsModal: React.FC<ShortsModalProps> = ({ onClose, bookId }) => {
           </button>
         </div>
       </div>
-    </div>
+    </button>
   );
 };
 
