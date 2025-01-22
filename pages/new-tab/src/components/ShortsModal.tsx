@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import CommentModal from './CommentModal'; // CommentModal 컴포넌트 가져오기
-
 interface ShortsModalProps {
-  onClose: () => void; // 모달 닫기 함수 정의
-  bookId: number | null; // 숏츠의 ID
-
+  onClose: () => void; // 모달 닫기 함수
+  bookId: number; // 책 ID를 prop으로 받아옴
+}
 const ShortsModal: React.FC<ShortsModalProps> = ({ onClose, bookId }) => {
   const [isFlipped, setIsFlipped] = useState(false); // 카드 회전 상태
   const [isCommentVisible, setIsCommentVisible] = useState(false); // 댓글창 상태
@@ -16,7 +15,6 @@ const ShortsModal: React.FC<ShortsModalProps> = ({ onClose, bookId }) => {
     visits: number;
     quote: string;
   } | null>(null); // 상세 정보 데이터 상태
-
   // 숏츠 API 데이터 가져오기
   useEffect(() => {
     const fetchShortsData = async () => {
@@ -32,10 +30,8 @@ const ShortsModal: React.FC<ShortsModalProps> = ({ onClose, bookId }) => {
         console.error('Error fetching shorts data:', error);
       }
     };
-
     fetchShortsData();
   }, [bookId]);
-
   // 설명창 데이터 가져오기
   useEffect(() => {
     const fetchDetailData = async () => {
@@ -57,16 +53,13 @@ const ShortsModal: React.FC<ShortsModalProps> = ({ onClose, bookId }) => {
         console.error('Error fetching detail data:', error);
       }
     };
-
     if (isFlipped) {
       fetchDetailData(); // 카드가 뒤집힐 때만 호출
     }
   }, [bookId, isFlipped]);
-
   const handleVideoEnd = () => {
     console.log('쇼츠 재생 완료.');
   };
-
   const handleBookRedirect = () => {
     if (shortsData?.bookUrl) {
       window.location.href = shortsData.bookUrl; // 도서 페이지로 이동
@@ -74,9 +67,8 @@ const ShortsModal: React.FC<ShortsModalProps> = ({ onClose, bookId }) => {
       console.error('Book URL not available.');
     }
   };
-
   return (
-    <button
+    <div
       className="fixed inset-0 z-50 flex justify-center items-center bg-black bg-opacity-50"
       onClick={onClose} // 모달 배경 클릭 시 모달 닫기
     >
@@ -91,7 +83,6 @@ const ShortsModal: React.FC<ShortsModalProps> = ({ onClose, bookId }) => {
           {isFlipped ? 'Back to Video' : 'Show Info'}
         </button>
       </div>
-
       {/* 모달 컨테이너 */}
       <div
         className={`relative flex transition-transform duration-500`}
@@ -123,7 +114,6 @@ const ShortsModal: React.FC<ShortsModalProps> = ({ onClose, bookId }) => {
               </video>
             </div>
           )}
-
           {/* 뒷면: 기본 정보 */}
           {isFlipped && detailData && (
             <div
@@ -134,7 +124,6 @@ const ShortsModal: React.FC<ShortsModalProps> = ({ onClose, bookId }) => {
               }}>
               {/* 책 제목 */}
               <h3 className="text-lg font-bold text-gray-800 mb-6">{shortsData?.title}</h3>
-
               {/* 최상단: 기본 정보 */}
               <div className="w-full flex justify-between items-center border border-orange-500 rounded-full py-2 px-4 text-center text-sm text-gray-700 mb-4">
                 <div>
@@ -154,12 +143,10 @@ const ShortsModal: React.FC<ShortsModalProps> = ({ onClose, bookId }) => {
                   <p className="text-orange-500 font-bold">{detailData.visits}</p>
                 </div>
               </div>
-
               {/* 중앙: 문구 */}
               <blockquote className="text-center text-gray-600 italic text-xl leading-relaxed flex-grow flex items-center justify-center">
                 "{detailData.quote}"
               </blockquote>
-
               {/* 하단: 도서페이지로 이동 버튼 */}
               <div className="w-full flex justify-center mt-4">
                 <button
@@ -171,7 +158,6 @@ const ShortsModal: React.FC<ShortsModalProps> = ({ onClose, bookId }) => {
             </div>
           )}
         </div>
-
         {/* 댓글창 */}
         {isCommentVisible && (
           <div
@@ -187,7 +173,6 @@ const ShortsModal: React.FC<ShortsModalProps> = ({ onClose, bookId }) => {
             />
           </div>
         )}
-
         {/* 아이콘 섹션 */}
         <div
           className="absolute flex flex-col items-center space-y-4"
@@ -213,8 +198,7 @@ const ShortsModal: React.FC<ShortsModalProps> = ({ onClose, bookId }) => {
           </button>
         </div>
       </div>
-    </button>
+    </div>
   );
 };
-
 export default ShortsModal;
