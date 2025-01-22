@@ -1,15 +1,40 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import { Link, useNavigate } from 'react-router-dom';
 
 const MainNav = () => {
+  const [isScrolled, setIsScrolled] = useState(false); // 스크롤 여부 상태 관리
+
+  // 스크롤 이벤트 핸들러
+  const handleScroll = () => {
+    if (window.scrollY > 0) {
+      setIsScrolled(true); // 스크롤이 0보다 크면 상태 변경
+    } else {
+      setIsScrolled(false); // 스크롤이 맨 위로 올라가면 원래 상태로
+    }
+  };
+
+  // 컴포넌트가 마운트될 때 스크롤 이벤트 리스너 추가
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll); // 컴포넌트가 언마운트될 때 이벤트 리스너 제거
+    };
+  }, []);
+
   return (
-    <nav className="fixed top-0 left-0 right-0 flex items-center justify-between font-dm-serif text-[#ff5213] bg-opacity-100 mt-0 mb-2 pt-12 z-50">
-      <Link to="/" className="text-5xl font-dm-serif text-[#ff5213] pl-16">
+    <nav
+      className={`fixed top-0 left-0 right-0 flex items-center justify-between font-dm-serif py-5 z-50 transition-all duration-300 ${
+        isScrolled ? 'bg-white shadow-md' : 'bg-transparent'
+      }`}>
+      {/* 로고 */}
+      <Link to="/" className="text-5xl font-dm-serif text-[#ff5213] pl-16 mt-2">
         Liver
       </Link>
-      <div className="flex items-center space-x-24">
+
+      {/* 네비게이션 메뉴 */}
+      <div className="flex items-center space-x-24 mt-4">
         <Link to="/recommend" className="text-xl font-dm-serif text-[#ff5213]">
           TODAY's SHORTS
         </Link>
@@ -20,6 +45,8 @@ const MainNav = () => {
           MY PAGE
         </Link>
       </div>
+
+      {/* 검색창 */}
       <MainInput />
     </nav>
   );
@@ -49,7 +76,7 @@ const MainInput = () => {
   };
 
   return (
-    <div className="relative pr-24">
+    <div className="relative pr-24 mt-1">
       <input
         type="text"
         className="text-black text-base font-normal font-dm-serif border rounded-3xl px-12 py-2 mt-2 bg-[#FCE8E1] w-96"
