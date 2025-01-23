@@ -1,6 +1,6 @@
 .container {
   position: relative; /* 자식 요소의 위치 조정을 위함 */
-
+  width: 100%;
 
   
 }
@@ -37,14 +37,21 @@
   z-index: 1; /* 선택된 카드가 위로 올라오게 함 */
 }
 
+.card-left,
+.card-right {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%); /* 수직 중앙 정렬 */
+}
+
 .card-left {
-  left: calc(50% - 490px); /* 왼쪽 카드 위치 조정 */
-  margin-right: 20px; /* 카드 간격 추가 */
+  left: 20%; /* 화면 왼쪽에서 20% 위치 */
+  transform: translateX(-50%);
 }
 
 .card-right {
-  left: calc(50% + 300px); /* 오른쪽 카드 위치 조정 */
-  margin-left: 20px; /* 카드 간격 추가 */
+  right: 20%; /* 화면 오른쪽에서 20% 위치 */
+  transform: translateX(50%);
 }
 
 .hidden {

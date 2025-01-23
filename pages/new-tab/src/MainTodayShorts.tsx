@@ -95,9 +95,14 @@ export default function MainTodayShorts() {
   return (
     <div className="flex flex-col">
       {/* 상단 타이틀 */}
-      <div className="pt-44 bg-white h-300px flex justify-center text-2xl font-dm-serif md:text-lg lg:text-2xl sm:text-base">
-        Today's Shorts!s
+      <div className="bg-white flex justify-center items-center text-center font-dm-serif h-[300px] sm:h-[250px] md:h-[300px] lg:h-[350px]">
+        <h1 className="text-5xl md:text-4xl sm:text-3xl">Today's Shorts!s</h1>
       </div>
+      {/* 가운데 VS 텍스트 */}
+      <div className="absolute inset-0 flex justify-center items-center pointer-events-none">
+        <span className="text-5xl md:text-4xl sm:text-3xl vs-text font-dm-serif">VS</span>
+      </div>
+
       <section className="container">
         {/* 카드 섹션 */}
         <div className="flex justify-center pb-20 mb-60 h-full lg:scale-100 md:scale-75 sm:scale-50">
@@ -116,12 +121,6 @@ export default function MainTodayShorts() {
               />
             </div>
           )}
-
-          {/* 가운데 VS 텍스트 */}
-          <span
-            className={`text-6xl vs-text font-dm-serif ml-56 pt-56 translate-x-5 xl:pt-56 ${selected ? 'hidden' : 'block sm:block'}`}>
-            VS
-          </span>
 
           {/* Right Card */}
           {shortsData[1] && (
