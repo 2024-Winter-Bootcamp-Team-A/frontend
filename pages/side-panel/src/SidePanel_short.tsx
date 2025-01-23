@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { AddComment } from './api/AddComment';
-import Request_short from './Request_short';
+import { AddComment } from './API/AddComment';
+import Request_short from './request_short';
+import { AddWished } from './API/AddWished';
+import { DeleteWished } from './API/DeleteWished';
 
 const SidePanelShort: React.FC = () => {
   const [isCommentOpen, setIsCommentOpen] = useState(false); // 전체 댓글 창 열림 상태
@@ -12,6 +14,8 @@ const SidePanelShort: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true); //loading중인지
   const [title, setTitle] = useState('');
   const [bookId, setBookId] = useState(0);
+  const [is_wish, setIs_wish] = useState(false);
+  const [currentTabUrl, setCurrentTabUrl] = useState<string | null>(null);
 
   const navigate = useNavigate();
 
@@ -34,9 +38,11 @@ const SidePanelShort: React.FC = () => {
       const data = await response.json();
 
       if (response.ok) {
+        setCurrentTabUrl(currentUrl);
         setStorage_url(data.storage_url || null);
         setTitle(data.title || '');
         setBookId(data.book_id || 0);
+        setIs_wish(data.is_wish || false);
       } else {
         setStorage_url(null); // 숏츠 데이터가 없으면 null
       }
@@ -56,7 +62,7 @@ const SidePanelShort: React.FC = () => {
         if (isGyoBoBook) {
           fetchShortsData(changeInfo.url); // 새 URL로 데이터 가져오기
         } else {
-          console.log('탭 URL이 교보문고 URL이 아닙니다. 창을 닫습니다.');
+          alert('탭 URL이 교보문고 URL이 아닙니다. 창을 닫습니다.');
           window.close();
         }
       }
@@ -69,7 +75,7 @@ const SidePanelShort: React.FC = () => {
       const isGyoBoBook = currentUrl.startsWith('https://product.kyobobook.co.kr/detail');
 
       if (!isGyoBoBook) {
-        console.log('탭 URL이 교보문고 URL이 아닙니다. 창을 닫습니다.');
+        alert('탭 URL이 교보문고 URL이 아닙니다. 창을 닫습니다.');
         window.close();
       } else {
         fetchShortsData(currentUrl); // 초기 URL 데이터 가져오기
@@ -155,6 +161,43 @@ const SidePanelShort: React.FC = () => {
   if (!storage_url) {
     return <Request_short />;
   }
+  const handleAddWished = async () => {
+    try {
+      let result;
+      if (!is_wish) {
+        // 위시리스트에 추가
+        result = await AddWished({ bookId });
+        console.log('찜하기 결과', result.message);
+        if (result.message === '위시리스트에 추가되었습니다.') {
+          setIs_wish(true);
+        }
+      } else {
+        // 위시리스트에서 삭제
+        result = await DeleteWished({ bookId });
+        console.log('찜 취소 결과', result.message);
+        if (result.message === '위시리스트에서 삭제되었습니다.') {
+          setIs_wish(false);
+        }
+      }
+    } catch (error: any) {
+      alert(error.message || '찜하기/취소 작업을 실패하셨습니다.');
+    }
+  };
+
+  const handleShare = async () => {
+    try {
+      if (!currentTabUrl) {
+        // currentTabUrl이 null인 경우 처리
+        alert('복사할 URL이 없습니다.');
+        return;
+      }
+      await navigator.clipboard.writeText(currentTabUrl);
+      alert('링크가 복사되었습니다!');
+    } catch (error) {
+      alert('링크 복사에 실패했습니다. 다시 시도해주세요.');
+      console.error('클립보드 복사 실패:', error);
+    }
+  };
 
   return (
     <div className="h-screen w-full bg-black text-white flex flex-col p-6 relative">
@@ -176,19 +219,23 @@ const SidePanelShort: React.FC = () => {
           {/* 아이콘 섹션 */}
           <div className="absolute bottom-20 right-4 flex flex-col items-center space-y-4">
             <div className="relative group">
-              <button className="w-8 h-8" aria-label="Add to wishlist">
-                <img src="wish.svg" alt="Wish" className="w-full h-full" />
+              {/* 찜하기버튼임 시작*/}
+              <button className="w-8 h-8" aria-label="Add to wishlist" onClick={handleAddWished}>
+                <img src={is_wish ? 'wish.svg' : 'nowish.svg'} alt="Wish" className="w-full h-full" />
               </button>
+              {/* 찜하기버튼임 끝*/}
               <span className="absolute right-12 top-1/2 transform -translate-y-1/2 text-gray-300 text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-200">
                 찜하기
               </span>
             </div>
             <div className="relative group">
-              <button className="w-8 h-8" aria-label="Share video">
+              {/* 공유하기 버튼 시작 */}
+              <button className="w-8 h-8" aria-label="Share video" onClick={() => handleShare()}>
                 <img src="share.svg" alt="Share" className="w-full h-full" />
               </button>
+              {/* 공유하기 버튼 끝 */}
               <span className="absolute right-12 top-1/2 transform -translate-y-1/2 text-gray-300 text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-                공유하기
+                링크복사하기
               </span>
             </div>
             <div className="relative group">
