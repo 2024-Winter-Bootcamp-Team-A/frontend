@@ -22,7 +22,7 @@ export function StatsBar({ data }: StatsBarProps) {
     <ChartContainer config={chartConfig} className="h-full w-full">
       <BarChart
         data={data}
-        width={400}
+        width={200}
         height={200}
         margin={{ top: 20, bottom: 20 }} // 아래 여백을 조금 넉넉히 설정
       >

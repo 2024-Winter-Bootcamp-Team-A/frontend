@@ -81,7 +81,7 @@ export default function MainTodayShorts() {
   };
 
   const handleSecondaryAction = () => {
-    setIsModalOpen(true);
+    setIsModalOpen(!isModalOpen);
   };
 
   const handleReroll = () => {
@@ -166,7 +166,9 @@ export default function MainTodayShorts() {
         )}
       </div>
       {/* 모달 */}
-      {/* {isModalOpen && selectedBookId !== null && <ShortsModal bookId={selectedBookId} onClose={() => setIsModalOpen(false)} />} */}
+      {isModalOpen && selectedBookId !== null && (
+        <ShortsModal bookId={selectedBookId} onClose={() => setIsModalOpen(false)} />
+      )}
     </div>
   );
 }

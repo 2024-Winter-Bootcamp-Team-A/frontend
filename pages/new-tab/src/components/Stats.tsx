@@ -195,7 +195,7 @@ const Stats: React.FC = () => {
                         { category: '20s', count: activeData.age_stats['20s'] },
                         { category: '30s', count: activeData.age_stats['30s'] },
                         { category: '40s', count: activeData.age_stats['40s'] },
-                        { category: '50s+', count: activeData.age_stats['50s+'] },
+                        { category: '50+', count: activeData.age_stats['50s+'] },
                       ]}
                     />
                   </div>

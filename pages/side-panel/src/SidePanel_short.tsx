@@ -38,7 +38,6 @@ const SidePanelShort: React.FC = () => {
       const data = await response.json();
 
       if (response.ok) {
-        setCurrentTabUrl(currentUrl);
         setStorage_url(data.storage_url || null);
         setTitle(data.title || '');
         setBookId(data.book_id || 0);
@@ -79,6 +78,7 @@ const SidePanelShort: React.FC = () => {
         window.close();
       } else {
         fetchShortsData(currentUrl); // 초기 URL 데이터 가져오기
+        setCurrentTabUrl(currentUrl);
       }
     });
 
@@ -159,7 +159,7 @@ const SidePanelShort: React.FC = () => {
     }
   };
   if (!storage_url) {
-    return <Request_short />;
+    return <Request_short currentURL={currentTabUrl} />;
   }
   const handleAddWished = async () => {
     try {
