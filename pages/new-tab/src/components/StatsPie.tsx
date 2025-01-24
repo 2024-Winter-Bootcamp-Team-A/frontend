@@ -1,15 +1,12 @@
 import * as React from 'react';
-import { Label, Pie, PieChart } from 'recharts';
+import { Label, Pie, PieChart, Cell } from 'recharts';
 import { CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from './ui/card';
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from './ui/chart';
 import type { ChartConfig } from './ui/chart';
 const chartConfig = {
-  visitors: {
-    label: 'Visitors',
-  },
   '10s': {
     label: '10-19',
-    color: '#4285F4',
+    color: '#2B9D90',
   },
   '20s': {
     label: '20-29',
@@ -29,8 +26,13 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
+interface StatsData {
+  category: '10s' | '20s' | '30s' | '40s' | '50+'; // 정확한 타입 정의
+  count: number;
+}
+
 interface StatsPieProps {
-  data: Array<{ category: string; count: number }>; // 데이터 형식 정의
+  data: Array<StatsData>;
 }
 
 export default function StatsPie({ data }: StatsPieProps) {
@@ -44,6 +46,12 @@ export default function StatsPie({ data }: StatsPieProps) {
         <PieChart>
           <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel />} />
           <Pie data={data} dataKey="count" nameKey="category" innerRadius={60} strokeWidth={5}>
+            {data.map((entry, index) => {
+              const color = chartConfig[entry.category]?.color || '#ccc'; // 카테고리별 색상 가져오기
+              return (
+                <Cell key={`cell-${index}`} fill={color} /> // 색상 적용
+              );
+            })}
             <Label
               content={({ viewBox }) => {
                 if (viewBox && 'cx' in viewBox && 'cy' in viewBox) {
