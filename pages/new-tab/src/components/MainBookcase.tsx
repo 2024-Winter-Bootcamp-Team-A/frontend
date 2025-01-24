@@ -1,77 +1,91 @@
 import { Card, CardContent } from './ui/card';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import ShortsModal from './ShortsModal'; // ShortsModal 컴포넌트 가져오기
 
-export default function MainBookcase({ title, direction = 'right' }: { title: string; direction?: 'left' | 'right' }) {
+export default function MainBookcase({
+  name,
+  title = '조회수', // 기본값 설정
+  direction = 'right',
+}: {
+  name: string;
+  title: '조회수' | '위시' | '댓글'; // 가능한 title 값 지정
+  direction?: 'left' | 'right';
+}) {
   const totalItems = 10; // 전체 항목 수
   const visibleItems = 4; // 화면에 보이는 항목 수
   const initialIndex = direction === 'right' ? 0 : totalItems - visibleItems; // 초기 인덱스 설정
   const [currentIndex, setCurrentIndex] = useState(initialIndex); // 현재 인덱스 상태 관리
-
   const [isModalOpen, setIsModalOpen] = useState(false); // 모달 상태 관리
   const [selectedBookId, setSelectedBookId] = useState<number | null>(null); // 선택된 책 ID 상태
-  const products = [
-    '길s',
-    '시녀 이야기',
-    '1984',
-    '멋진 신세계',
-    '화씨 451',
-    '듄',
-    '어둠의 왼손',
-    '뉴로맨서',
-    '눈보라',
-    '소유된 자들',
-  ]; // 캐러셀에 표시될 제품 목록
+  const [products, setProducts] = useState<{ book_id: number; image: string }[]>([]); // API 데이터 상태 관리
+
+  // API 요청 함수
+  const fetchShortsData = async (queryTitle: string, limit: number = 10) => {
+    try {
+      const response = await fetch(
+        `http://localhost:8000/api/v1/shorts/shorts?title=${encodeURIComponent(queryTitle)}&limit=${limit}`,
+        {
+          method: 'GET',
+          headers: {
+            Accept: 'application/json',
+          },
+        },
+      );
+      if (!response.ok) {
+        throw new Error('Failed to fetch data');
+      }
+      const data = await response.json();
+      setProducts(data); // API 데이터를 상태로 설정
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+
+  useEffect(() => {
+    // 컴포넌트 마운트 시 또는 title 변경 시 API 호출
+    fetchShortsData(title); // title을 동적으로 전달
+  }, [title]); // title 변경 시 useEffect 재실행
 
   const handleNext = () => {
-    // 다음 버튼 클릭 시 호출
     if (currentIndex < totalItems - visibleItems) {
-      setCurrentIndex(currentIndex + 1); // 인덱스를 증가시켜 다음 항목 표시
+      setCurrentIndex(currentIndex + 1);
     }
   };
 
   const handlePrevious = () => {
-    // 이전 버튼 클릭 시 호출
     if (currentIndex > 0) {
-      setCurrentIndex(currentIndex - 1); // 인덱스를 감소시켜 이전 항목 표시
+      setCurrentIndex(currentIndex - 1);
     }
   };
 
   const handleCardClick = (bookId: number) => {
-    console.log('선택된 책 ID:', bookId); // 클릭된 책의 ID를 콘솔에 출력
-    setSelectedBookId(bookId); // 선택된 책 ID 설정
-    setIsModalOpen(true); // 모달 열기
+    console.log('선택된 책 ID:', bookId);
+    setSelectedBookId(bookId);
+    setIsModalOpen(true);
   };
 
   return (
-    <div className="w-full max-w-full relative mb-0 overflow-hidden">
-      {/* 제목 */}
-      <h2 className={`text-2xl font-dm-serif mt-36 mb-[-48px] ml-[108px]`}>{title}</h2> {/* mb-0으로 변경 */}
-      {/* 캐러셀 컨테이너 */}
-      <div
-        className={`relative overflow-hidden z-10 ${direction === 'right' ? 'ml-[50px]' : 'mr-[50px]'}`} // 방향에 따른 마진 조정
-      >
+    <div className="w-full max-w-full relative mb-16 overflow-hidden">
+      <h2 className={`text-2xl font-dm-serif mt-12 mb-4 ml-8`}>{name}</h2>
+      <div className={`relative overflow-hidden z-10 ${direction === 'right' ? 'ml-[50px]' : 'mr-[50px]'}`}>
         <div
           className="flex transition-transform duration-500 ease-in-out gap-4"
           style={{
             transform: `translateX(-${currentIndex * (100 / visibleItems)}%)`,
           }}>
-          {products.map((product, index) => (
+          {products.map(product => (
             <div
-              key={index}
-              className="flex-shrink-0 mt-0" // 카드 컨테이너의 위쪽 마진 최소화
+              key={product.book_id}
+              className="flex-shrink-0"
               style={{
                 width: `${100 / visibleItems}%`,
               }}>
               <button
                 className="w-full h-full transform scale-[0.6] transition-transform hover:scale-[0.75] focus:outline-none"
-                onClick={() => handleCardClick(index + 1)}>
-                {' '}
-                {/* bookId로 index + 1 전달 */}
+                onClick={() => handleCardClick(product.book_id)}>
                 <Card>
                   <CardContent className="flex flex-col aspect-[3/4] items-center justify-center p-4 bg-gray-100 space-y-2 shadow-2xl hover:bg-gray-200">
-                    <span className="text-3xl font-semibold">{index + 1}</span>
-                    <span className="text-sm text-gray-700">{product}</span>
+                    <img src={product.image} alt={`Book ${product.book_id}`} className="w-full h-full object-contain" />
                   </CardContent>
                 </Card>
               </button>
@@ -79,45 +93,21 @@ export default function MainBookcase({ title, direction = 'right' }: { title: st
           ))}
         </div>
       </div>
-      {/* 이전 버튼 */}
       <button
         onClick={handlePrevious}
         className="absolute top-1/2 left-4 transform -translate-y-1/2 bg-gray-200 p-3 rounded-full shadow hover:bg-gray-300 disabled:opacity-50 z-20"
         disabled={currentIndex === 0}>
         <img src="왼쪽화살표.svg" alt="왼쪽 화살표" className="w-4 h-4" />
       </button>
-      {/* 다음 버튼 */}
       <button
         onClick={handleNext}
         className="absolute top-1/2 right-4 transform -translate-y-1/2 bg-gray-200 p-3 rounded-full shadow hover:bg-gray-300 disabled:opacity-50 z-20"
         disabled={currentIndex >= totalItems - visibleItems}>
         <img src="오른쪽화살표.svg" alt="오른쪽 화살표" className="w-4 h-4" />
       </button>
-      {/* 받침대 */}
-      <div className="w-full h-[60px] relative mt-4">
-        <div
-          className={`absolute w-[1800px] h-7 bg-gray-300 ${direction === 'right' ? 'left-[50px]' : 'right-[50px]'}`} // 받침대 위치 조정
-          style={{
-            clipPath: 'polygon(3% 0%, 97% 0%, 100% 100%, 0% 100%)',
-            top: '-110px',
-            zIndex: 0,
-          }}
-        />
-        <div
-          className={`absolute w-[1800px] h-7 bg-white shadow-[2px_7px_30px_10px_rgba(0,0,0,0.25)] ${
-            direction === 'right' ? 'left-[50px]' : 'right-[50px]'
-          }`} // 받침대 그림자 위치 조정
-          style={{
-            top: '-80px',
-          }}
-        />
-      </div>
-      {/* 모달 컴포넌트 */}
+
       {isModalOpen && selectedBookId !== null && (
-        <ShortsModal
-          onClose={() => setIsModalOpen(false)}
-          bookId={selectedBookId} // 선택된 bookId 전달
-        />
+        <ShortsModal onClose={() => setIsModalOpen(false)} bookId={selectedBookId} />
       )}
     </div>
   );

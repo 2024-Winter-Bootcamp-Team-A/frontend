@@ -31,7 +31,7 @@ export default function MainBoard() {
         <div className="relative flex items-center justify-center z-0">
           <img src={'길거리 배경.png'} alt="전광판 이미지" className="w-full max-w-[1790px] h-auto lg:h-[856px]" />
           <video
-            src={'video/final_clip.mp4'}
+            src={'hangang.mp4'}
             className="absolute left-[77%] top-[55%] transform -translate-x-1/2 -translate-y-1/2 w-60 md:w-80 lg:w-[420px] h-auto rounded-lg shadow-lg bg-black py-4"
             controls
             autoPlay
