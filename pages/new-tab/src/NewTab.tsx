@@ -30,10 +30,11 @@ const NewTab = () => {
     <div>
       <MainBoard />
       <div>
-        <MainBookcase title="Top 10" direction="right" />
-        <MainBookcase title="Trending Now" direction="left" />
-        <MainBookcase title="Editor's Choice" direction="right" />
+        <MainBookcase name="Top 10 Books" title="조회수" direction="right" />
+        <MainBookcase name="Trending Now" title="댓글" direction="left" />
+        <MainBookcase name="Editor's Choice" title="위시" direction="right" />
       </div>
+
       {/* 디버깅용 유저 정보 출력 */}
       {userInfo && (
         <div className="mt-4 p-4 bg-gray-100 rounded">
