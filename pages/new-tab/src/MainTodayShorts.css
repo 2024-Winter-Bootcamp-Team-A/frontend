@@ -1,86 +1,103 @@
-.container {
-  position: relative; /* 자식 요소의 위치 조정을 위함 */
-
-
-  
+.main-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.animate-card {
-  position: absolute;
-  transition: transform 0.6s ease;
+.title {
+  font-family: 'DM Serif Display', serif; /* 원하는 폰트 */
+  font-size: 2rem; /* 폰트 크기 조정 */
+  font-weight: bold; /* 폰트 두께 설정 */
+  text-align: center; /* 가운데 정렬 */
+  margin-bottom: 40px; /* 아래 마진 추가 */
 }
 
+.cards-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  width: 100%;
+  height: auto;
+  gap: 50px; /* 카드 간 간격 설정 */
+}
+
+/* 카드 스타일 */
 .card {
   position: relative;
   width: 400px;
   height: 540px;
   transform-style: preserve-3d;
-  transition: transform 0.6s ease;
+  transition: transform 0.6s ease, opacity 0.6s ease;
+  cursor: pointer;
 }
 
-.card.flipped {
-  transform: rotateY(180deg);
+/* 카드 앞면 스타일 */
+.card-front {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  transform: rotateY(0deg); /* 기본 상태 */
 }
 
-.card-center {
-    position: absolute;
-    top: 0%; /* 수직 가운데 정렬 */
-    left: 45%; /* 수평 가운데 정렬 */
-    transform: translate(0%, 0%); /* 정확한 중심 위치 */
-    z-index: 2; /* 다른 카드보다 위에 표시되도록 */
-    transition: transform 0.6s ease, top 0.6s ease, left 0.6s ease;
-  }
-  
-
-.card-selected {
-  transform: scale(1.25);
-  z-index: 1; /* 선택된 카드가 위로 올라오게 함 */
+/* 카드 뒷면 스타일 */
+.card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  transform: rotateY(-180deg) scaleX(-1); /* 뒷면을 제대로 보이게 설정 */
 }
 
+/* 카드 위치 및 애니메이션 */
 .card-left {
-  left: calc(50% - 490px); /* 왼쪽 카드 위치 조정 */
-  margin-right: 20px; /* 카드 간격 추가 */
+  transform: translateX(-150%);
 }
 
 .card-right {
-  left: calc(50% + 300px); /* 오른쪽 카드 위치 조정 */
-  margin-left: 20px; /* 카드 간격 추가 */
+  transform: translateX(150%);
 }
 
-.hidden {
-    visibility: hidden; /* 요소를 보이지 않게 */
-    opacity: 0; /* 시각적으로도 투명하게 */
-    pointer-events: none; /* 클릭 이벤트 차단 */
-    transition: opacity 0.6s ease; /* 선택 시 부드럽게 나타나도록 */
-  }
-  
-
-@media (max-width: 768px) {
-
-
-
-
-  .text-6xl {
-    font-size: 3rem;
-    margin-left: 0;
-    padding-top: 20px;
-  }
-
-
-
-
+.card-selected {
+  transform: scale(1.2) translate(0, -20%);
+  z-index: 10;
 }
 
-.container {
-    position: relative; /* 컨테이너를 기준으로 위치를 설정 */
-  }
-  
+.card.flipped {
+  transform: rotateY(-180deg);
+}
 
-  
-  @media (max-width: 768px) {
-    .vs-text {
-      font-size: 1.5rem; /* 작은 화면에서 VS 텍스트 크기를 줄임 */
-      
-    }
-  }
+/* VS 텍스트 */
+.vs-text {
+  font-family: 'DM Serif Display', serif; /* 원하는 폰트 */
+  font-size: 2rem; /* 폰트 크기 */
+  font-weight: normal; /* 폰트 두께 */
+  text-align: center; /* 가운데 정렬 */
+}
 
+/* 버튼 스타일 */
+.button-container {
+  margin-top: 20px;
+}
+
+.reroll-button img {
+  width: 50px;
+}
+
+.save-button {
+  background-color: #ff5213;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-right: 10px; /* 버튼 간 간격 추가 */
+}
+
+.shorts-button {
+  background-color: #ff5213;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}

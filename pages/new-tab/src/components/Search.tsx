@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import ShortsModal from './ShortsModal'; // ShortsModal 컴포넌트 가져오기
 
 const Search: React.FC = () => {
   const [searchParams] = useSearchParams(); // 쿼리스트링 추출
@@ -7,6 +8,8 @@ const Search: React.FC = () => {
   const [filteredData, setFilteredData] = useState<any[]>([]); // 필터링된 데이터 상태
   const [isLoading, setIsLoading] = useState(true); // 로딩 상태
   const [error, setError] = useState<string | null>(null); // 에러 상태
+  const [isModalOpen, setIsModalOpen] = useState(false); // 모달 상태 관리
+  const [selectedBookId, setSelectedBookId] = useState<number | null>(null); // 선택된 책 ID
 
   // 검색어에 따라 API 호출
   useEffect(() => {
@@ -46,6 +49,11 @@ const Search: React.FC = () => {
     fetchSearchResults();
   }, [query]);
 
+  const handleCardClick = (bookId: number) => {
+    setSelectedBookId(bookId); // 선택된 책 ID 설정
+    setIsModalOpen(true); // 모달 열기
+  };
+
   return (
     <div className="min-h-screen w-screen bg-white">
       <div className="w-full max-w-[1280px] px-4 mx-auto mt-32">
@@ -61,17 +69,24 @@ const Search: React.FC = () => {
         ) : filteredData.length > 0 ? (
           <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {filteredData.map((item: any) => (
-              <div
+              <button
                 key={item.book_id}
-                className="w-full max-w-[240px] h-[320px] bg-white border border-gray-200 shadow-lg mx-auto">
+                className="w-full max-w-[240px] h-[320px] bg-white border border-gray-200 shadow-lg mx-auto"
+                onClick={() => handleCardClick(item.book_id)} // 카드 클릭 시 모달 열기
+              >
                 <img src={item.image} alt={item.book_id} className="w-full h-full object-cover rounded" />
-              </div>
+              </button>
             ))}
           </div>
         ) : (
           <p className="text-gray-500 col-span-full">검색 결과가 없습니다. 다른 검색어를 입력해보세요.</p>
         )}
       </div>
+
+      {/* ShortsModal 컴포넌트 */}
+      {isModalOpen && selectedBookId !== null && (
+        <ShortsModal bookId={selectedBookId} onClose={() => setIsModalOpen(false)} />
+      )}
     </div>
   );
 };
