@@ -52,7 +52,7 @@ const MyPage: React.FC = () => {
     }))
     .sort((a, b) => parseFloat(b.percentage) - parseFloat(a.percentage));
 
-  const barColors = ['#FF6A34', '#FC926C', '#FFE1D6', '#FFC4A3', '#FFD8C6', '#FFF2EB'];
+  const barColors = ['#E55604', '#26577C', '#B4B4B3', '#EBE4D1'];
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -147,7 +147,7 @@ const MyPage: React.FC = () => {
             <button
               className="flex flex-col items-center focus:outline-none"
               onClick={() => setIsWishedModalOpen(true)}>
-              <p className="mb-8 text-xs sm:text-sm md:text-base lg:text-lg font-semibold">찜한 숏츠</p>
+              <p className="mb-8 text-xs sm:text-sm md:text-base lg:text-lg font-semibold">위시리스트</p>
               <div className="relative w-32 sm:w-36 h-44 sm:h-48">
                 {recentImages.wished.map((image, index) => (
                   <img

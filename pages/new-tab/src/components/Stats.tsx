@@ -115,7 +115,7 @@ const Stats: React.FC = () => {
           onClick={handlePrev}
           className="absolute left-[16rem] top-1/2 transform -translate-y-1/2 bg-gray-300 w-10 h-10 rounded-full flex justify-center items-center hover:bg-gray-400 z-10"
           aria-label="Previous Slide">
-          <span className="text-black text-lg">{'<'}</span>
+          <img src="왼쪽화살표.svg" alt="Previous Slide" className="w-4 h-4" />
         </button>
 
         {/* 카드 그룹 */}
@@ -154,7 +154,7 @@ const Stats: React.FC = () => {
           onClick={handleNext}
           className="absolute right-[16rem] top-1/2 transform -translate-y-1/2 bg-gray-300 w-10 h-10 rounded-full flex justify-center items-center hover:bg-gray-400 z-10"
           aria-label="Next Slide">
-          <span className="text-black text-lg">{'>'}</span>
+          <img src="오른쪽화살표.svg" alt="Previous Slide" className="w-4 h-4" />
         </button>
       </div>
 
