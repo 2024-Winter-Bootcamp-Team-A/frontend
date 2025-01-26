@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 
 const MainNav = () => {
   const [isScrolled, setIsScrolled] = useState(false); // 스크롤 여부 상태 관리
+  const location = useLocation(); // 현재 경로 확인
 
   // 스크롤 이벤트 핸들러
   const handleScroll = () => {
@@ -35,20 +36,27 @@ const MainNav = () => {
 
       {/* 네비게이션 메뉴 */}
       <div className="flex items-center space-x-24 mt-4">
-        <Link to="/recommend" className="text-xl font-dm-serif text-[#ff5213]">
-          TODAY's SHORTS
-        </Link>
-        <Link to="/stats" className="text-xl font-dm-serif text-[#ff5213]">
-          STATS
-        </Link>
-        <Link to="/mypage" className="text-xl font-dm-serif text-[#ff5213]">
-          MY PAGE
-        </Link>
+        <NavLink to="/recommend" currentPath={location.pathname} label="TODAY's SHORTS" />
+        <NavLink to="/stats" currentPath={location.pathname} label="STATS" />
+        <NavLink to="/mypage" currentPath={location.pathname} label="MY PAGE" />
       </div>
 
       {/* 검색창 */}
       <MainInput />
     </nav>
+  );
+};
+
+// 네비게이션 링크 컴포넌트
+const NavLink = ({ to, currentPath, label }: { to: string; currentPath: string; label: string }) => {
+  const isActive = currentPath === to; // 현재 경로와 일치 여부 확인
+  return (
+    <Link to={to} className={`text-xl font-dm-serif text-[#ff5213] relative ${isActive ? 'font-bold' : 'font-normal'}`}>
+      {label}
+      {isActive && (
+        <span className="absolute bottom-[-5px] left-0 right-0 h-[2px] bg-[#ff5213]" style={{ width: '100%' }} />
+      )}
+    </Link>
   );
 };
 
