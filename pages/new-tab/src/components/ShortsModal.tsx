@@ -61,7 +61,7 @@ const ShortsModal: React.FC<ShortsModalProps> = ({ onClose, bookId }) => {
           views: data.views || 0,
           wishes: data.wishes || 0,
           shares: data.shares || 0,
-          visits: data.visits || 0, // visits가 숫자가 아니면 0으로 설정
+          visits: data.book_visits || 0, // visits가 숫자가 아니면 0으로 설정
           quote: data.key_sentence || '',
         });
       } catch (error) {
@@ -112,10 +112,12 @@ const ShortsModal: React.FC<ShortsModalProps> = ({ onClose, bookId }) => {
         throw new Error('Failed to increment visit count');
       }
 
-      console.log('Visit count incremented successfully');
+      const responseData = await response.json(); // 서버에서 반환된 데이터 확인
+      console.log('Response Data:', responseData);
+
       setDetailData(prevData => {
         if (prevData) {
-          return { ...prevData, visits: (prevData.visits || 0) + 1 };
+          return { ...prevData, visits: responseData.visits || prevData.visits + 1 }; // 서버 값으로 업데이트
         }
         return prevData;
       });
@@ -217,7 +219,7 @@ const ShortsModal: React.FC<ShortsModalProps> = ({ onClose, bookId }) => {
 
         <div
           className="absolute flex flex-col items-center space-y-4"
-          style={{ right: isCommentVisible ? '400px' : '-50px', top: '88%', transform: 'translateY(-50%)' }}
+          style={{ right: isCommentVisible ? '-40px' : '-50px', top: '88%', transform: 'translateY(-50%)' }}
           onClick={e => e.stopPropagation()}>
           <button className="w-8 h-8" aria-label="Add to wishlist" onClick={toggleWish}>
             <img src={isWished ? 'nowish.svg' : 'wish.svg'} alt="Wish" className="w-full h-full" />
