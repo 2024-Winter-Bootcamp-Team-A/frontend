@@ -88,17 +88,20 @@ const SidePanel = () => {
 
   return (
     <div>
-      <Link to="/">
+      <button
+        onClick={() => {
+          chrome.tabs.create({});
+        }}>
         <SideNav />
-      </Link>
-      <div className="flex:1 h-full overflow-y-auto w-full bg-white overflow-hidden mt-7">
+      </button>
+      <div className="flex:1 h-full overflow-y-auto w-full bg-white overflow-hidden mt-7 ">
         {/* 비디오 관련 섹션 */}
         {/* <div className="bg-gradient-to-t from-black via-black to-black opacity-60 mix-blend-darken" /> */}
         {/* 비디오 배경 */}
-        {/* <div className="w-[320px] h-[640px] bg-gradient-to-b from-[#999999] via-[#CCCCCC] to-white ml-5 mt-2 pl-3 pt-2" /> */}
+        <div className="w-[320px] h-[620px] bg-gradient-to-b from-[rgba(0,0,0,0.2)] via-[rgba(204,204,204,0.5)] to-black ml-3 mt-2  pt-2 absolute top-[100px] z-20 bg-opacity-0" />
         <video src={bestShorts?.storage_url} controls className="w-[320px] h-[640px] z-10 bg-black ml-3"></video>
 
-        <div className="w-[324px] h-[171px] absolute top-24 pl-5">
+        <div className="w-[324px] h-[171px] absolute top-28 pl-5">
           <span className="font-['AppleSDGothicNeoEB00'] text-3xl font-normal text-white">
             어떤 책을 읽을까
             <br />

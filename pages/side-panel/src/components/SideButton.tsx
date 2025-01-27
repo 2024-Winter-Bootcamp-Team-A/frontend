@@ -12,7 +12,7 @@ const SideButton: React.FC<SideButtonProps> = ({ name, path }: SideButtonProps) 
   };
   return (
     <button
-      className="bg-[#ff5213] rounded-3xl py-2 px-5 whitespace-nowrap text-white text-xl font-normal font-dm-serif"
+      className="bg-[#ff5213] rounded-2xl py-2 px-5 whitespace-nowrap text-white text-xl font-normal font-dm-serif"
       onClick={ButtonClick}>
       {name}
     </button>
