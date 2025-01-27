@@ -212,9 +212,12 @@ const SidePanelShort: React.FC = () => {
       }}>
       {/* 상단 헤더 */}
 
-      <Link to="/">
+      <button
+        onClick={() => {
+          chrome.tabs.create({});
+        }}>
         <h1 className="text-2xl font-bold text-orange-500 mb-6 text-left">Liverary</h1>
-      </Link>
+      </button>
       {/* 동영상 영역 */}
       <div className="flex justify-center items-center flex-grow relative" style={{ marginBottom: '100px' }}>
         <div className="w-[400px] h-[650px] rounded-lg overflow-hidden relative">

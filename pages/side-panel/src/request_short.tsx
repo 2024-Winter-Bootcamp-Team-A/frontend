@@ -26,9 +26,13 @@ const Request_short: React.FC<RequestShortProps> = ({ currentURL }) => {
   return (
     <div className="flex justify-center items-center h-screen bg-gray-100">
       <div className="w-[330px] h-[550px] bg-gradient-to-b from-white to-gray-300 border border-gray-300 rounded-lg shadow-md overflow-hidden">
-        <Link to={'/'} className="text-orange-500 text-center text-xl mt-8 font-bold">
+        <button
+          onClick={() => {
+            chrome.tabs.create({});
+          }}
+          className="text-orange-500 text-center text-xl mt-8 font-bold">
           Liverary
-        </Link>
+        </button>
         <div className="text-black p-5 m-5 rounded-md text-center mt-16">
           <p className="text-xl leading-relaxed">
             아직 이 도서는 <br />
