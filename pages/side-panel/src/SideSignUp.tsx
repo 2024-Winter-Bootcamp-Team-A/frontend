@@ -40,9 +40,12 @@ const SideSignUp = () => {
 
   return (
     <div>
-      <Link to="/">
+      <button
+        onClick={() => {
+          chrome.tabs.create({});
+        }}>
         <SideNav />
-      </Link>
+      </button>
       <div className="mt-8">
         <div className="w-full h-full flex flex-col content-around items-center bg-white overflow-hidden p-8 space-y-10">
           <div className="text-[#ff5213] text-xl font-normal font-dm-serif">Name</div>
@@ -73,7 +76,6 @@ const SideSignUp = () => {
             <span className="text-white text-xl font-normal font-dm-serif">Sign Up</span>
           </button>
           {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
-
         </div>
       </div>
     </div>
