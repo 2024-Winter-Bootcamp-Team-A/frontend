@@ -170,7 +170,7 @@ const Stats: React.FC = () => {
                 <StatsData title="Views" data={activeData.views} />
                 <StatsData title="Wished" data={activeData.wishes} />
                 <StatsData title="Shared" data={activeData.shares} />
-                <StatsData title="BookVisits" data={activeData.book_visits} />
+                <StatsData title={`Book\nVisits`} data={activeData.book_visits} />
               </div>
               <div className="flex flex-col justify-normal">
                 {/* 상단 차트 두 개 */}
