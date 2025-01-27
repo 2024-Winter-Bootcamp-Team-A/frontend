@@ -16,6 +16,7 @@ const SidePanelShort: React.FC = () => {
   const [bookId, setBookId] = useState(0);
   const [is_wish, setIs_wish] = useState(false);
   const [currentTabUrl, setCurrentTabUrl] = useState<string | null>(null);
+  const [BookImg, setBookImg] = useState<string | undefined>(undefined);
 
   const navigate = useNavigate();
 
@@ -42,6 +43,7 @@ const SidePanelShort: React.FC = () => {
         setTitle(data.title || '');
         setBookId(data.book_id || 0);
         setIs_wish(data.is_wish || false);
+        setBookImg(data.image || null);
       } else {
         setStorage_url(null); // 숏츠 데이터가 없으면 null
       }
@@ -200,7 +202,14 @@ const SidePanelShort: React.FC = () => {
   };
 
   return (
-    <div className="h-screen w-full bg-black text-white flex flex-col p-6 relative">
+    <div
+      className="h-screen w-full bg-black text-white flex flex-col p-6 relative"
+      style={{
+        backgroundImage: `url(${BookImg})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        opacity: 0.8, // 투명도 설정
+      }}>
       {/* 상단 헤더 */}
 
       <Link to="/">
@@ -221,7 +230,7 @@ const SidePanelShort: React.FC = () => {
             <div className="relative group">
               {/* 찜하기버튼임 시작*/}
               <button className="w-8 h-8" aria-label="Add to wishlist" onClick={handleAddWished}>
-                <img src={is_wish ? 'wish.svg' : 'nowish.svg'} alt="Wish" className="w-full h-full" />
+                <img src={is_wish ? 'wish.svg' : 'nowishh.svg'} alt="Wish" className="w-full h-full" />
               </button>
               {/* 찜하기버튼임 끝*/}
               <span className="absolute right-12 top-1/2 transform -translate-y-1/2 text-gray-300 text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-200">
