@@ -1,9 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { MakeShorts } from './API/MakeShorts';
+
 interface RequestShortProps {
   currentURL: string | null;
 }
+
 const Request_short: React.FC<RequestShortProps> = ({ currentURL }) => {
   const handleMaking = async () => {
     if (!currentURL) {
@@ -24,23 +26,28 @@ const Request_short: React.FC<RequestShortProps> = ({ currentURL }) => {
   };
 
   return (
-    <div className="flex justify-center items-center h-screen bg-gray-100">
-      <div className="w-[330px] h-[550px] bg-gradient-to-b from-white to-gray-300 border border-gray-300 rounded-lg shadow-md overflow-hidden">
-        <button
-          onClick={() => {
-            chrome.tabs.create({});
-          }}
-          className="text-orange-500 text-center text-xl mt-8 font-bold">
-          Liverary
-        </button>
-        <div className="text-black p-5 m-5 rounded-md text-center mt-16">
+    <div className="flex justify-center items-center h-screen bg-gray-800 relative">
+      {/* Liverary 글자 */}
+      <button
+        onClick={() => {
+          chrome.tabs.create({});
+        }}
+        className="absolute top-4 left-4 text-orange-500 text-2xl font-bold z-10">
+        Liverary
+      </button>
+
+      {/* 카드 상자 */}
+      <div className="w-[330px] h-[550px] bg-black border border-black rounded-lg shadow-md overflow-hidden">
+        <div className="text-white p-5 m-5 rounded-md text-center mt-16">
           <p className="text-xl leading-relaxed">
             아직 이 도서는 <br />
             생성된 숏츠가 없습니다.
             <br />
             당신의 요청 한마디로 쇼츠의 <br />
             마법이 시작 될 거예요! <br />
-            1분 내에 완성됩니다!! 확인 완료 창이 뜰때까지 조금 기다려주세요!
+            1분 내에 완성됩니다!! <br />
+            확인 완료 창이 뜰때까지 <br />
+            조금 기다려주세요!
           </p>
         </div>
         <div className="flex flex-col items-center mt-8">
