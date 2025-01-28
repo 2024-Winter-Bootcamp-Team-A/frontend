@@ -87,14 +87,14 @@ const SidePanel = () => {
   }
 
   return (
-    <div>
+    <div className="bg-black">
       <button
         onClick={() => {
           chrome.tabs.create({});
         }}>
-        <img src="북클립글자.png" alt="Logo" className="w-[120px] h-[60px] pl-2 pt-2" />
+        <img src="북클립글자.png" alt="Logo" className="w-[150px] h-[70px] pl-4 pt-4" />
       </button>
-      <div className="flex:1 h-full overflow-y-auto w-full bg-white overflow-hidden mt-7 ">
+      <div className="flex:1 h-full overflow-y-auto w-full bg-black overflow-hidden mt-5 ">
         {/* 비디오 관련 섹션 */}
         {/* <div className="bg-gradient-to-t from-black via-black to-black opacity-60 mix-blend-darken" /> */}
         {/* 비디오 배경 */}
@@ -125,7 +125,7 @@ const SidePanel = () => {
           // 로그인 상태: "쇼츠 페이지 이동" 버튼과 "로그아웃" 버튼 표시
           <div>
             <button
-              className="w-40 h-12 mt-16 ml-24 bg-[#FF5213] rounded-2xl flex items-center justify-center shadow-md hover:bg-[#FF3F0E] transition duration-200"
+              className="w-40 h-12 mt-20 ml-24 bg-[#FF5213] rounded-2xl flex items-center justify-center shadow-md hover:bg-[#FF3F0E] transition duration-200"
               onClick={handleShortPageNavigation} // 쇼츠 페이지로 이동
             >
               <SideButton name="쇼츠 페이지 이동" path="/sidepanel_short" />

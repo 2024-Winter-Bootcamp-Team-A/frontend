@@ -214,7 +214,7 @@ const SidePanelShort: React.FC = () => {
         onClick={() => {
           chrome.tabs.create({});
         }}>
-        <img src="북클립글자.png" alt="Logo" className="w-[120px] h-[60px] " />
+        <img src="북클립글자.png" alt="Logo" className="w-[120px] h-[55px] " />
       </button>
       {/* 동영상 영역 */}
       <div className="flex justify-center items-center flex-grow relative" style={{ marginBottom: '100px' }}>
