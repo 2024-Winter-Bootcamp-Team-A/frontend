@@ -92,7 +92,7 @@ const SidePanel = () => {
         onClick={() => {
           chrome.tabs.create({});
         }}>
-        <SideNav />
+        <img src="북클립글자.png" alt="Logo" className="w-[120px] h-[60px] pl-2 pt-2" />
       </button>
       <div className="flex:1 h-full overflow-y-auto w-full bg-white overflow-hidden mt-7 ">
         {/* 비디오 관련 섹션 */}

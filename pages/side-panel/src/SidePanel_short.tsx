@@ -4,6 +4,7 @@ import { AddComment } from './API/AddComment';
 import Request_short from './request_short';
 import { AddWished } from './API/AddWished';
 import { DeleteWished } from './API/DeleteWished';
+import './SidePanel_short.css';
 
 const SidePanelShort: React.FC = () => {
   const [isCommentOpen, setIsCommentOpen] = useState(false); // 전체 댓글 창 열림 상태
@@ -203,12 +204,9 @@ const SidePanelShort: React.FC = () => {
 
   return (
     <div
-      className="h-screen w-full bg-black text-white flex flex-col p-6 relative"
+      className="h-screen w-full bg-black text-white flex flex-col p-6 relative bg-conatiner"
       style={{
-        backgroundImage: `url(${BookImg})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        opacity: 0.8, // 투명도 설정
+        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${BookImg})`,
       }}>
       {/* 상단 헤더 */}
 
@@ -216,7 +214,7 @@ const SidePanelShort: React.FC = () => {
         onClick={() => {
           chrome.tabs.create({});
         }}>
-        <h1 className="text-2xl font-bold text-orange-500 mb-6 text-left">Liverary</h1>
+        <img src="북클립글자.png" alt="Logo" className="w-[120px] h-[60px] " />
       </button>
       {/* 동영상 영역 */}
       <div className="flex justify-center items-center flex-grow relative" style={{ marginBottom: '100px' }}>

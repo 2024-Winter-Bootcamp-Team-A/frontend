@@ -31,7 +31,7 @@ const MainNav = () => {
       }`}>
       {/* 로고 */}
       <Link to="/" className="text-5xl font-dm-serif text-[#ff5213] pl-16 mt-2">
-        Liver
+        <img src="북클립글자.png" alt="Logo" />
       </Link>
 
       {/* 네비게이션 메뉴 */}

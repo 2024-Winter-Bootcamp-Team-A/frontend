@@ -33,7 +33,7 @@ const Request_short: React.FC<RequestShortProps> = ({ currentURL }) => {
           chrome.tabs.create({});
         }}
         className="absolute top-4 left-4 text-orange-500 text-2xl font-bold z-10">
-        Liverary
+        <img src="북클립글자.png" alt="Logo" className="w-[120px] h-[60px] pl-2 pt-2" />
       </button>
 
       {/* 카드 상자 */}
