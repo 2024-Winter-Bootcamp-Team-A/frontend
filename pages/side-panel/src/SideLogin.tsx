@@ -74,7 +74,7 @@ const SideLogin = () => {
         onClick={() => {
           chrome.tabs.create({});
         }}>
-        <SideNav />
+        <img src="북클립글자.png" alt="Logo" className="w-[120px] h-[60px] pl-2 pt-2" />
       </button>
       <div className="w-full h-full flex flex-col items-center bg-white overflow-hidden p-20 space-y-12 mt-16">
         <div className="text-[#ff5213] text-2xl font-normal font-dm-serif mb-2">Welcome back</div>

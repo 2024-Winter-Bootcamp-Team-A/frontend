@@ -1,0 +1,16 @@
+.bg-container {
+    position: relative;
+    overflow: hidden;
+    opacity: 0.1; /* 배경 투명도 */
+  }
+  
+  .bg-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('<BookImg_URL>') center/cover no-repeat;
+    z-index: -1; /* 콘텐츠 뒤로 배치 */
+  }
