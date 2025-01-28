@@ -1,10 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { MakeShorts } from './API/MakeShorts';
+import LoadingModal from './LoadingModal'; // 로딩 모달 컴포넌트 가져오기
+
 interface RequestShortProps {
   currentURL: string | null;
 }
+
 const Request_short: React.FC<RequestShortProps> = ({ currentURL }) => {
+  const [isLoading, setIsLoading] = useState(false); // 로딩 상태 관리
+
   const handleMaking = async () => {
     if (!currentURL) {
       console.log(currentURL);
@@ -12,19 +17,24 @@ const Request_short: React.FC<RequestShortProps> = ({ currentURL }) => {
       return;
     }
 
+    setIsLoading(true); // 로딩 시작
+
     try {
       const result = await MakeShorts(currentURL); // MakeShorts 함수 호출
       console.log('MakeShorts 결과:', result);
       alert('책 저장 및 숏츠 생성 요청이 완료되었습니다.');
+      setIsLoading(false); // 로딩 종료
       window.close();
     } catch (error: any) {
       alert(error.message || '요청 처리 중 오류가 발생했습니다.');
       console.error('MakeShorts 오류:', error);
+      setIsLoading(false); // 로딩 종료
     }
   };
 
   return (
     <div className="flex justify-center items-center h-screen bg-gray-100">
+      <LoadingModal isOpen={isLoading} /> {/* 로딩 모달 추가 */}
       <div className="w-[330px] h-[550px] bg-gradient-to-b from-white to-gray-300 border border-gray-300 rounded-lg shadow-md overflow-hidden">
         <Link to={'/'} className="text-orange-500 text-center text-xl mt-8 font-bold">
           Liverary
