@@ -4,6 +4,7 @@ import { AddComment } from './API/AddComment';
 import Request_short from './request_short';
 import { AddWished } from './API/AddWished';
 import { DeleteWished } from './API/DeleteWished';
+import './SidePanel_short.css';
 
 const SidePanelShort: React.FC = () => {
   const [isCommentOpen, setIsCommentOpen] = useState(false); // 전체 댓글 창 열림 상태
@@ -16,6 +17,7 @@ const SidePanelShort: React.FC = () => {
   const [bookId, setBookId] = useState(0);
   const [is_wish, setIs_wish] = useState(false);
   const [currentTabUrl, setCurrentTabUrl] = useState<string | null>(null);
+  const [BookImg, setBookImg] = useState<string | undefined>(undefined);
 
   const navigate = useNavigate();
 
@@ -42,6 +44,7 @@ const SidePanelShort: React.FC = () => {
         setTitle(data.title || '');
         setBookId(data.book_id || 0);
         setIs_wish(data.is_wish || false);
+        setBookImg(data.image || null);
       } else {
         setStorage_url(null); // 숏츠 데이터가 없으면 null
       }
@@ -200,12 +203,19 @@ const SidePanelShort: React.FC = () => {
   };
 
   return (
-    <div className="h-screen w-full bg-black text-white flex flex-col p-6 relative">
+    <div
+      className="h-screen w-full bg-black text-white flex flex-col p-6 relative bg-conatiner"
+      style={{
+        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${BookImg})`,
+      }}>
       {/* 상단 헤더 */}
 
-      <Link to="/">
-        <h1 className="text-2xl font-bold text-orange-500 mb-6 text-left">Liverary</h1>
-      </Link>
+      <button
+        onClick={() => {
+          chrome.tabs.create({});
+        }}>
+        <img src="북클립글자.png" alt="Logo" className="w-[120px] h-[55px] " />
+      </button>
       {/* 동영상 영역 */}
       <div className="flex justify-center items-center flex-grow relative" style={{ marginBottom: '100px' }}>
         <div className="w-[400px] h-[650px] rounded-lg overflow-hidden relative">
@@ -221,7 +231,7 @@ const SidePanelShort: React.FC = () => {
             <div className="relative group">
               {/* 찜하기버튼임 시작*/}
               <button className="w-8 h-8" aria-label="Add to wishlist" onClick={handleAddWished}>
-                <img src={is_wish ? 'wish.svg' : 'nowish.svg'} alt="Wish" className="w-full h-full" />
+                <img src={is_wish ? 'wish.svg' : 'nowishh.svg'} alt="Wish" className="w-full h-full" />
               </button>
               {/* 찜하기버튼임 끝*/}
               <span className="absolute right-12 top-1/2 transform -translate-y-1/2 text-gray-300 text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-200">

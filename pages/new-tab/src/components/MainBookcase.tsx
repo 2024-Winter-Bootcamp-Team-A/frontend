@@ -38,6 +38,7 @@ export default function MainBookcase({
       setProducts(data); // API 데이터를 상태로 설정
     } catch (error) {
       console.error('Error fetching data:', error);
+      alert('데이터를 불러오는 데 실패했습니다. 다시 시도해주세요.');
     }
   };
 
@@ -65,11 +66,11 @@ export default function MainBookcase({
   };
 
   return (
-    <div className="w-full max-w-full relative mb-16 overflow-hidden">
-      <h2 className={`text-2xl font-dm-serif mt-12 mb-4 ml-8`}>{name}</h2>
-      <div className={`relative overflow-hidden z-10 ${direction === 'right' ? 'ml-[50px]' : 'mr-[50px]'}`}>
+    <div className="w-full max-w-full relative mb-4 overflow-hidden">
+      <h2 className={`text-2xl font-dm-serif mt-20 ml-8`}>{name}</h2>
+      <div className={`overflow-hidden z-10 ${direction === 'right' ? 'ml-[40px]' : 'mr-[40px]'}`}>
         <div
-          className="flex transition-transform duration-500 ease-in-out gap-4"
+          className="flex transition-transform duration-500 ease-in-out "
           style={{
             transform: `translateX(-${currentIndex * (100 / visibleItems)}%)`,
           }}>
@@ -95,13 +96,13 @@ export default function MainBookcase({
       </div>
       <button
         onClick={handlePrevious}
-        className="absolute top-1/2 left-4 transform -translate-y-1/2 bg-gray-200 p-3 rounded-full shadow hover:bg-gray-300 disabled:opacity-50 z-20"
+        className="absolute top-[60%] left-4 transform -translate-y-1/2 bg-gray-200 p-3 rounded-full shadow hover:bg-gray-300 disabled:opacity-50 z-20"
         disabled={currentIndex === 0}>
         <img src="왼쪽화살표.svg" alt="왼쪽 화살표" className="w-4 h-4" />
       </button>
       <button
         onClick={handleNext}
-        className="absolute top-1/2 right-4 transform -translate-y-1/2 bg-gray-200 p-3 rounded-full shadow hover:bg-gray-300 disabled:opacity-50 z-20"
+        className="absolute top-[60%] right-4 transform -translate-y-1/2 bg-gray-200 p-3 rounded-full shadow hover:bg-gray-300 disabled:opacity-50 z-20"
         disabled={currentIndex >= totalItems - visibleItems}>
         <img src="오른쪽화살표.svg" alt="오른쪽 화살표" className="w-4 h-4" />
       </button>

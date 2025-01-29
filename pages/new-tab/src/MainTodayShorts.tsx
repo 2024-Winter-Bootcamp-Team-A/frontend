@@ -115,17 +115,23 @@ export default function MainTodayShorts() {
           </div>
         )}
       </section>
-      <div className="button-container mb-10">
+      <div className="button-container mb-10 rounded-3xl">
         {!selected ? (
           <button className="reroll-button" onClick={handleReroll}>
             <img src="리롤버튼.svg" alt="리롤버튼" />
           </button>
         ) : (
           <div className="action-buttons">
-            <button className="save-button" onClick={() => selectedBookId && handlePrimaryAction(selectedBookId)}>
+            <button
+              className="save-button rounded-3xl"
+              style={{ borderRadius: '1.5rem' }} // 스타일 강제로 적용
+              onClick={() => selectedBookId && handlePrimaryAction(selectedBookId)}>
               카드 저장하기
             </button>
-            <button className="shorts-button" onClick={handleSecondaryAction}>
+            <button
+              className="shorts-button rounded-3xl"
+              style={{ borderRadius: '1.5rem' }} // 스타일 강제로 적용
+              onClick={handleSecondaryAction}>
               쇼츠 보러가기
             </button>
           </div>
