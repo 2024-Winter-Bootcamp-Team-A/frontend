@@ -92,17 +92,20 @@ const SidePanel = () => {
         onClick={() => {
           chrome.tabs.create({});
         }}>
-        <img src="북클립글자.png" alt="Logo" className="w-[150px] h-[70px] pl-4 pt-4" />
+        <img src="북클립글자.png" alt="Logo" className="w-[150px] h-[70px] pl-4 pt-6" />
       </button>
-      <div className="flex:1 h-full overflow-y-auto w-full bg-black overflow-hidden mt-5 ">
+      <div className="flex:1 h-full overflow-y-auto w-full bg-black overflow-hidden mt-2 ">
         {/* 비디오 관련 섹션 */}
         {/* <div className="bg-gradient-to-t from-black via-black to-black opacity-60 mix-blend-darken" /> */}
         {/* 비디오 배경 */}
-        <div className="w-[320px] h-[620px] bg-gradient-to-b from-[rgba(0,0,0,0.2)] via-[rgba(204,204,204,0.5)] to-black ml-3 mt-2  pt-2 absolute top-[100px] z-20 bg-opacity-0" />
-        <video src={bestShorts?.storage_url} controls className="w-[320px] h-[640px] z-10 bg-black ml-3"></video>
+
+        <video
+          src={bestShorts?.storage_url}
+          controls
+          className="w-[320px] h-[640px] z-10 bg-black ml-3 mt-[-20px]"></video>
 
         <div className="w-[324px] h-[171px] absolute top-28 pl-5">
-          <span className="font-['AppleSDGothicNeoEB00'] text-3xl font-normal text-white">
+          <span className="font-['AppleSDGothicNeoEB00'] text-3xl font-normal text-white ">
             어떤 책을 읽을까
             <br />
           </span>
@@ -125,7 +128,7 @@ const SidePanel = () => {
           // 로그인 상태: "쇼츠 페이지 이동" 버튼과 "로그아웃" 버튼 표시
           <div>
             <button
-              className="w-40 h-12 mt-20 ml-24 bg-[#FF5213] rounded-2xl flex items-center justify-center shadow-md hover:bg-[#FF3F0E] transition duration-200"
+              className="w-40 h-12 mt-28 ml-24 bg-[#FF5213] rounded-2xl flex items-center justify-center shadow-md hover:bg-[#FF3F0E] transition duration-200"
               onClick={handleShortPageNavigation} // 쇼츠 페이지로 이동
             >
               <SideButton name="쇼츠 페이지 이동" path="/sidepanel_short" />
