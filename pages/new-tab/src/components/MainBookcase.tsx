@@ -12,7 +12,7 @@ export default function MainBookcase({
   direction?: 'left' | 'right';
 }) {
   const totalItems = 10; // 전체 항목 수
-  const visibleItems = 4; // 화면에 보이는 항목 수
+  const visibleItems = 5; // 화면에 보이는 항목 수
   const initialIndex = direction === 'right' ? 0 : totalItems - visibleItems; // 초기 인덱스 설정
   const [currentIndex, setCurrentIndex] = useState(initialIndex); // 현재 인덱스 상태 관리
   const [isModalOpen, setIsModalOpen] = useState(false); // 모달 상태 관리
@@ -85,8 +85,12 @@ export default function MainBookcase({
                 className="w-full h-full transform scale-[0.6] transition-transform hover:scale-[0.75] focus:outline-none"
                 onClick={() => handleCardClick(product.book_id)}>
                 <Card>
-                  <CardContent className="flex flex-col aspect-[3/4] items-center justify-center p-4 bg-gray-100 space-y-2 shadow-2xl hover:bg-gray-200">
-                    <img src={product.image} alt={`Book ${product.book_id}`} className="w-full h-full object-contain" />
+                  <CardContent className="flex flex-col aspect-[3/4] items-center justify-center p-0 bg-gray-100 space-y-2 shadow-2xl hover:bg-gray-200">
+                    <img
+                      src={product.image}
+                      alt={`Book ${product.book_id}`}
+                      className="absolute inset-0 w-full h-full object-cover"
+                    />
                   </CardContent>
                 </Card>
               </button>

@@ -12,16 +12,13 @@ export default function MainBoard() {
 
           {/* 소년이 온다 및 인용문 */}
           <div className="text-lg md:text-xl text-center mt-5 font-myungjo">
-            <p className="mb-6">소년이 온다</p>
-            <p className="mb-10">작가 한강</p>
+            <p className="mb-10 font-bold">세상의 마지막 기차역</p>
+            <p className="mb-12">작가 무라세 다케시</p>
             <div className="leading-relaxed space-y-2">
               <p>"</p>
-              <p>얼굴은 어떻게</p>
-              <p>내면을 숨기는가.</p>
-              <p>그녀는 생각한다.</p>
-              <p>어떻게 무감각을,</p>
-              <p>잔인성을, 살인을</p>
-              <p>숨기는가.</p>
+              <p>만약 그 사람을</p>
+              <p>한 번 더 만날 수 있다면</p>
+              <p>어떻게 할래요?</p>
               <p>"</p>
             </div>
           </div>
@@ -31,7 +28,7 @@ export default function MainBoard() {
         <div className="flex items-center justify-center z-0">
           <img src={'길거리 배경.png'} alt="전광판 이미지" className="w-full max-w-[1790px] h-[700px]" />
           <video
-            src={'hangang.mp4'}
+            src={'final.mp4'}
             className="absolute left-[77%] top-[60%] transform -translate-x-1/2 -translate-y-1/2 w-60 md:w-80 lg:w-[400px] aspect-[5/8] rounded-lg shadow-lg bg-black py-4"
             controls
             autoPlay
