@@ -2,7 +2,7 @@ export default function MainFooter() {
   return (
     <div className="bg-gray-300 h-48 pl-10 pt-10 pb-10 flex justify-between items-center relative">
       <div className="text-black text-opacity-24">
-        <span className="text-xl font-dm-serif text-[#ff5213]">Livarary</span>
+        <img src="북클립글자.png" alt="Logo" className="w-[100px]" />
         <br />
         @(주)라이브러리 | 대표자: 김보배 | 사업자번호: 202001590 사업자 정보 확인
         <br />
